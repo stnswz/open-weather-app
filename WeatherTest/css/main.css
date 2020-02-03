@@ -1,0 +1,103 @@
+body {
+    margin: 0px;
+    padding: 0px;
+}
+div {
+    box-sizing: border-box;
+}
+#textInput {
+    width: 300px;
+}
+#content, #content2 {
+    width:500px;
+    margin-top: 10px;
+    clear:both;
+}
+.title {
+    font-size: 18px;
+}
+.output {
+    border: 0px solid #aaa;
+    width: 300px;
+    min-height: 200px;
+    float:left;
+    margin-left: 10px;
+    color: #333;
+}
+.imagebox {
+    border-left: 0px solid #aaa;
+    width: 100px;
+    float:left;
+}
+
+#mainContent {
+    width: 100vw;
+    display:flex;
+    justify-content:center;
+    align-items: flex-start;
+}
+
+#innerContent {
+    width: 75vw;
+    background-color: #777;
+}
+
+#inputBar {
+    padding: 10px;
+    display:flex;
+    justify-content:center;
+    align-items: flex-start;
+    background-color: #999;
+}
+
+.dayBox {
+    margin: 0px;
+    background-color:none;
+}
+.dayBoxTitle {
+    font-size: 18px;
+    margin-left: 10px;
+}
+.dayBoxBorder {
+    height: 1px;
+    background-color: #ccc;
+}
+.dayFlexBox {
+    width: 100%;  /*vw: viewport width / vh: viewport height*/
+    padding-right: 1%;
+    display:flex;
+    justify-content:flex-start;
+    align-items: flex-start;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.hourBoxWrap {
+    width: 24%;
+    min-width:220px;
+    margin-left: 1%;
+}
+.hourBox {
+    border: 0px solid #000;
+    background-color: #ccc;
+    margin-right: 0px;
+    margin-bottom: 10px;
+    padding:10px;
+    display:flex;
+    justify-content:flex-start;
+    align-items: flex-start;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+.hourImage {
+    width: 100px;
+}
+.hourOutput {
+    width: 100%;
+    margin-left: 10px;
+    color: #333;
+    background-color:none;
+}
+.icon {
+    margin-left:-10px;
+    margin-top: -10px;
+}

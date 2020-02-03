@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            Weather App Test
+        </title>
+        <link rel="stylesheet" href="css/test.css">
+    </head>
+
+    <body>
+        <!-- http://api.openweathermap.org/data/2.5/weather?q=berlin&units=metric&lang=de&APPID=ca58313c1aca8a7d3f65508931f39677 -->
+        
+        <!--
+            0-3   Nachts
+            6-9   Morgens
+            12-15 Mittags
+            18-21 Abends
+        -->
+
+        <div id="mainContent">
+            <div id="innerColumn">
+                <div id="innerContent">
+
+                    <div id="inputBar">
+                        <input id="textInput" type="text" value="" placeholder="Das Wetter in..."> 
+                        <div id="button" onclick="getWeather()">Anzeigen</div>
+                    </div>
+
+                    <div class="dayBox">
+                        <h3 class="dayBoxTitle">Wetter aktuell für Berlin</h3>
+
+                        <div id="dayFlexBox">
+                            
+                            <div class="weatherTodayBox">
+                                <div class="hourImageBigNight">
+                                    <img class="iconBig" src="http://openweathermap.org/img/wn/02n@2x.png" />
+                                </div>
+                                <div id="output" class="weatherTodayText">
+                                    Aktuell: 8 Grad<br>
+                                    Min: 7 Grad<br>
+                                    Max: 9 Grad<br><br>
+                                    
+                                    Überwiegend bewölkt<br>
+                                    Wolken: 75 %
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dayBoxBorder"></div>
+
+                    <div class="dayBox">
+
+                        <h3 class="dayBoxTitle">Wetter für Berlin am 29.1.2020</h3>
+
+                        <div class="dayFlexBox">
+                            <div class="hourBoxWrap">
+                                <div class="hourBox">
+                                    <div class="hourImage">
+                                        <img class="icon" src="http://openweathermap.org/img/wn/10d@2x.png" /><br>
+                                        <img class="icon2" src="http://openweathermap.org/img/wn/09d@2x.png" />
+                                    </div>
+                                    <div class="hourOutput">
+                                        <strong class="time">Morgens</strong><br><br>
+                                        5 Grad<br>
+                                        Überwiegend bewölkt<br>
+                                        Wolken: 75 %
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="hourBoxWrap">
+                                <div class="hourBox">
+                                    <div class="hourImage">
+                                        <img class="icon" src="http://openweathermap.org/img/wn/01d@2x.png" />
+                                    </div>
+                                    <div class="hourOutput">
+                                        <strong class="time">Mittags</strong><br><br>
+                                        5 Grad<br>
+                                        Überwiegend<br>
+                                        Wolken: 75 %
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="hourBoxWrap">
+                                <div class="hourBox">
+                                    <div class="hourImage">
+                                        <img class="icon" src="http://openweathermap.org/img/wn/04n@2x.png" />
+                                    </div>
+                                    <div class="hourOutput">
+                                        <strong class="time">Abends</strong><br><br>
+                                        5 Grad<br>
+                                        Überwiegend bewölkt<br>
+                                        Wolken: 75 %
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="hourBoxWrap">
+                                <div class="hourBoxNight">
+                                    <div class="hourImage">
+                                        <img class="icon" src="http://openweathermap.org/img/wn/03n@2x.png" />
+                                    </div>
+                                    <div class="hourOutput">
+                                        <strong class="time">Nachts</strong><br><br>
+                                        5 Grad<br>
+                                        Überwiegend bewölkt<br>
+                                        Wolken: 75 %
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div> <!-- dayBox -->
+
+                    <!-- <div class="dayBoxBorder"></div> -->
+
+                    <div class="dayBox">
+
+                        <h3 class="dayBoxTitle">Wetter für Berlin am 30.1.2020</h3>
+
+                        <div class="dayFlexBox">
+                            <div class="hourBoxWrap">
+                                <div class="hourBoxNight">
+                                    <div class="hourImage">
+                                        <img class="icon" src="http://openweathermap.org/img/wn/01n@2x.png" /><br>
+                                        <img class="icon2" src="http://openweathermap.org/img/wn/02n@2x.png" />
+                                    </div>
+                                    <div class="hourOutput">
+                                        <strong class="time">21 Uhr</strong><br><br>
+                                        5 Grad<br>
+                                        Überwiegend bewölkt<br>
+                                        Wolken: 75 %
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="hourBoxWrap">
+                                <div class="hourBox">
+                                    <div class="hourImage">
+                                        <img class="icon" src="http://openweathermap.org/img/wn/03n@2x.png" />
+                                    </div>
+                                    <div class="hourOutput">
+                                        <strong class="time">21 Uhr</strong><br><br>
+                                        5 Grad<br>
+                                        Überwiegend bewölkt<br>
+                                        Wolken: 75 %
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="hourBoxWrap">
+                                <div class="hourBox">
+                                    <div class="hourImage">
+                                        <img class="icon" src="http://openweathermap.org/img/wn/04n@2x.png" /><br>
+                                        <img class="icon2" src="http://openweathermap.org/img/wn/03n@2x.png" />
+                                    </div>
+                                    <div class="hourOutput">
+                                        <strong class="time">21 Uhr</strong><br><br>
+                                        5 Grad<br>
+                                        Überwiegend bewölkt<br>
+                                        Wolken: 75 %
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="hourBoxWrap">
+                                <div class="hourBox">
+                                    <div class="hourImage">
+                                        <img class="icon" src="http://openweathermap.org/img/wn/03n@2x.png" />
+                                    </div>
+                                    <div class="hourOutput">
+                                        <strong class="time">21 Uhr</strong><br><br>
+                                        5 Grad<br>
+                                        Überwiegend bewölkt<br>
+                                        Wolken: 75 %
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div> <!-- dayBox -->
+                
+                </div> <!-- innerContent -->
+            </div> <!-- innerColumn -->
+        </div> <!-- mainContent -->
+
+    </body>
+
+</html>
