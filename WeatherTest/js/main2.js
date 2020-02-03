@@ -5,6 +5,8 @@ async function getWeather() {
     const response = await fetch("http://api.openweathermap.org/data/2.5/forecast?q="+city+"&units=metric&lang=de&APPID=ca58313c1aca8a7d3f65508931f39677");
     //const response = await fetch("http://api.openweathermap.org/data/2.5/weather?q="+city+"&units=metric&lang=de&APPID=ca58313c1aca8a7d3f65508931f39677");
     
+    // http://api.openweathermap.org/data/2.5/forecast?q=berlin&units=metric&lang=de&APPID=ca58313c1aca8a7d3f65508931f39677
+    
     const data = await response.json();
     //console.dir(data);
 

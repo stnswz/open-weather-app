@@ -8,12 +8,14 @@ interface IWeatherState {
     forecastData: Array<IFullDayData>,
     loadingError: boolean,
     errorCode: string,
+    errorMessage: string,
 }
 
 const initialState:IWeatherState = {
     dataIsLoading: false,
     loadingError: false,
     errorCode: "",
+    errorMessage: "",
     currentWeatherData: undefined!,
     forecastData: new Array<IFullDayData>(),
 }
@@ -31,7 +33,12 @@ const reducer = (state:IWeatherState = initialState, action:any) => {
                     forecastData: action.payload.forecastData,
             }
         case types.LOADING_ERROR:
-            return { ...state, dataIsLoading: false, loadingError: true, errorCode: action.payload.errorCode }
+            return { ...state, 
+                    dataIsLoading: false, 
+                    loadingError: true, 
+                    errorCode: action.payload.errorCode, 
+                    errorMessage: action.payload.errorMessage,
+            }
         default:
             return state;
     }

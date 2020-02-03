@@ -3,6 +3,7 @@ import types from './../constants';
 import {RequestApi} from "../../requestApi/requestApi";
 import {ICurrentWeatherData} from "../../components/definitions/ICurrentWeatherData";
 import {IFullDayData} from "../../components/definitions/IFullDayData";
+import {getForecastData} from "../../utils/parseFunctions";
 
 export function loadWeatherData(city:string) {
 
@@ -18,6 +19,8 @@ export function loadWeatherData(city:string) {
             // City nicht angegeben: {"cod":"400","message":"Nothing to geocode"}
 
             const data:any = await RequestApi.getWeatherData( city );
+            //const currentWeatherData:ICurrentWeatherData = getCurrentWeatherData( data );
+            const forcastData: Array<IFullDayData> = getForecastData( data );
 
             dispatch({
                 type: types.WEATHER_DATA_LOADED,
