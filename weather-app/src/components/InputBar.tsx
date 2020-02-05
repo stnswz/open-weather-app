@@ -33,11 +33,14 @@ class InputBar extends Component<IProps, IState> {
     }
 
     private onTextChange( ev:any ) {
-        this.setState({inputValue:ev.value});
+        this.setState({inputValue:ev.target.value});
     }
 
     private onButtonClick( ev:any ) {
-        alert("button click");
+        if( !this.props.loadWeatherData ) {
+            return;
+        }
+        this.props.loadWeatherData( this.state.inputValue );
     }
 
     public render(): ReactElement {
