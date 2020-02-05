@@ -1,12 +1,24 @@
 import React, { Component, ReactElement, Fragment } from "react";
+import { connect } from 'react-redux';
+import DayPeriodBox from "./DayPeriodBox";
+import {IFullDayData} from "./../../components/definitions/IFullDayData";
+import {IDayPeriod} from "./../../components/definitions/IDayPeriod";
 
 interface IState {
     /** empty state */
 }
 interface IProps {
-    /** empty props */
+    forecastData?: Array<IFullDayData>,
 }
 
+const state = (store:any) => ({
+    forecastData: store.weatherState.forecastData,
+});
+const operations = (dispatch:any) => ({
+    //loadWeatherData: (city:string) => { dispatch( loadWeatherData(city) ) },
+});
+
+@(connect(state, operations) as any)
 class WeatherForecast extends Component<IProps, IState> {
 
     constructor(props:IProps) {
@@ -14,11 +26,37 @@ class WeatherForecast extends Component<IProps, IState> {
         this.state = {
             
         }
+        this.getDayPeriods = this.getDayPeriods.bind( this );
+    }
+
+    private getDayPeriods( dayPeriods:Array<IDayPeriod> ): Array<ReactElement> {
+        return dayPeriods.map( (dayPeriod, index) => <DayPeriodBox key={index+dayPeriod.dayTime} dayPeriod={dayPeriod} />);
     }
 
     public render(): ReactElement {
 
+        const forecastData: Array<IFullDayData> = this.props.forecastData || [];
+        const numberForecastDays:number = forecastData.length;
+
         return (
+            <Fragment>
+
+                {
+                    numberForecastDays ? forecastData.map( (fullDayData) => 
+                        <div className="dayBox" key={fullDayData.date}>
+                            <h3 className="dayBoxTitle">Wetter für {fullDayData.city} am {fullDayData.date}</h3>
+                            <div className="dayFlexBox">
+                                {this.getDayPeriods(fullDayData.dayPeriods)}
+                            </div>
+                        </div>) : ""
+                }
+
+            </Fragment>
+        );
+
+        /*
+        return (
+            
             <Fragment>
                 <div className="dayBox">
                     <h3 className="dayBoxTitle">Wetter für Berlin am 29.1.2020</h3>
@@ -84,7 +122,9 @@ class WeatherForecast extends Component<IProps, IState> {
                     </div>
                 </div>
             </Fragment>
+            
         );
+        */
     }
 }
 
