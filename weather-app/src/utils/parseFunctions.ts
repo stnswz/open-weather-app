@@ -1,6 +1,7 @@
 import {ICurrentWeatherData} from "../components/definitions/ICurrentWeatherData";
-import {IFullDayData} from "../components/definitions/IFullDayData";
-import {IDayPeriod} from "../components/definitions/IDayPeriod";
+import {IFullDayData} from "./../components/definitions/IFullDayData";
+import {IDayPeriod} from "./../components/definitions/IDayPeriod";
+import {AppConfig} from "./../config/AppConfig";
 
 interface IHourData {
     date: string,
@@ -54,18 +55,19 @@ export function getForecastData( data:any ):Array<IFullDayData> {
 
 function getDayPeriod( h1:IHourData, h2:IHourData): IDayPeriod {
 
-    const temp:Array<number> = sortAscending(h1.temperature, h2.temperature);
+    const temp:Array<number>   = sortAscending(h1.temperature, h2.temperature);
     const clouds:Array<number> = sortAscending(h1.clouds, h2.clouds);
+    const icons:Array<string>  = getIcons(h1.icon, h2.icon);
 
     let dayPeriod:IDayPeriod = {
         dayTime: getDayTime( h1.hour ), // Morgens, Mittags, Abends...
-        temperature: temp.length == 1 ? temp[0]+" Grad" : temp[0]+ " - " + temp[0]+" Grad",
+        temperature: temp.length === 1 ? temp[0]+" Grad" : temp[0]+ " - " + temp[1]+" Grad",
         description: getDescription( h1.description, h2.description ),
-        clouds: clouds.length == 1 ? clouds[0]+" %" : clouds[0]+ " - " + clouds[0]+" %",
-        icon1: "",
-        icon2: "",
-        isDayTime: true,
-        isNightTime: false,
+        clouds: clouds.length === 1 ? clouds[0]+" %" : clouds[0]+ " - " + clouds[1]+" %",
+        icon1URL: icons[0],
+        icon2URL: icons[1],
+        isDayTime: h1.icon.charAt(2) === "d", // e.g. 04d@2x.png / 04n@2x.png
+        isDayAndNightTime: h1.icon.charAt(2) !== h2.icon.charAt(2),
     }
 
     return dayPeriod;
@@ -85,11 +87,18 @@ function getDayPeriod( h1:IHourData, h2:IHourData): IDayPeriod {
     }
 
     function sortAscending( v1:number, v2:number ): Array<number> {
-        return v1 < v2 ? [v1, v2] : [v2, v1];
+        if( v1 === v2 ) {
+            return [v1];
+        }
+        else return v1 < v2 ? [v1, v2] : [v2, v1];
     }
 
     function getDescription( descr1:string, descr2:string ):string {
-        return descr1 === descr2 ? descr1 : descr1 + " bis " + descr2;
+        return descr1 === descr2 ? descr1 : descr1 + " / " + descr2;
+    }
+
+    function getIcons( icon1:string, icon2:string ): Array<string> {
+        return icon1 === icon2 ? [AppConfig.ICON_URL + icon1 + ".png", ""] : [AppConfig.ICON_URL+icon1+".png", AppConfig.ICON_URL+icon2+".png"];
     }
 }
 
@@ -111,7 +120,7 @@ function getParsedHoursData( weatherList: Array<any> ): Array< Array<IHourData> 
         let hour  = date.getHours();
         let d = day + "." + month + "." + year; 
 
-        if( i == 0 ) {
+        if( i === 0 ) {
             curDay = day;
         }
 
@@ -127,7 +136,7 @@ function getParsedHoursData( weatherList: Array<any> ): Array< Array<IHourData> 
         if( curDay !== day ) {
             // Day changed, we need a new dayList Array.
             allDaysList.push(dayList);
-            dayList   = new Array();
+            dayList   = new Array<IHourData>();
             curDay = day;
         }
 

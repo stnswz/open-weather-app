@@ -1,10 +1,9 @@
+import {AppConfig} from "./../config/AppConfig"
+
 export class RequestApi {
 
-    private static HOST: string  = "http://api.openweathermap.org/data/2.5/forecast";
-    private static APPID: String = "ca58313c1aca8a7d3f65508931f39677";
-
     public static getWeatherData( city:string, lang:string = "de" ) {
-        const url: string = this.HOST + "?q="+city+"&units=metric&lang="+lang+"&APPID="+this.APPID;
+        const url: string = AppConfig.HOST + "?q="+city+"&units=metric&lang="+lang+"&APPID="+AppConfig.API_KEY;
         return this.request( url, 'GET' );
     }
 
@@ -13,7 +12,8 @@ export class RequestApi {
         const response:any = await fetch(url, { method:method });
 
         if( response.status === 200 ) {
-            const { data } = await response.json();
+            //const { data } = await response.json();
+            const data = await response.json();
             return data;
         } 
         else {

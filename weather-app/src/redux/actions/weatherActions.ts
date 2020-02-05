@@ -26,7 +26,7 @@ export function loadWeatherData(city:string) {
                 type: types.WEATHER_DATA_LOADED,
                 payload: {
                     currentWeatherData: undefined,
-                    forecastData: undefined,
+                    forecastData: forcastData,
                 }
             });
         }
