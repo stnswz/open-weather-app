@@ -3,8 +3,8 @@ export interface IDayPeriod {
 	temperature: string,
 	description: string,
 	clouds: string,
-	icon1: string,
-	icon2: string,
+	icon1URL: string,
+	icon2URL: string,
 	isDayTime: boolean,
-	isNightTime: boolean,
+	isDayAndNightTime: boolean,
 }
