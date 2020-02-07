@@ -1,18 +1,34 @@
-import {ICurrentWeatherData} from "../components/definitions/ICurrentWeatherData";
-import {IFullDayData} from "./../components/definitions/IFullDayData";
+import {IDayData} from "../components/definitions/IDayData";
 import {IDayPeriod} from "./../components/definitions/IDayPeriod";
 import {AppConfig} from "./../config/AppConfig";
 
 interface IHourData {
     date: string,
+    year:number,
     hour: number,
+    weekDay: number,
     temperature: number,
+    feelsLike: number,
     description: string,
     clouds: number,
+    wind: number,
+    rain: number,
+    humidity: number,
+    pressure: number,
     icon: string,
 }
 
-export function getForecastData( data:any ):Array<IFullDayData> {
+const dayMap:any = {
+    "0" : ["So", "Sonntag"],
+    "1" : ["Mo", "Montag"],
+    "2" : ["Di", "Dienstag"],
+    "3" : ["Mi", "Mittwoch"],
+    "4" : ["Do", "Donnerstag"],
+    "5" : ["Fr", "Freitag"],
+    "6" : ["Sa", "Samstag"],
+}
+
+export function getForecastData( data:any ):Array<IDayData> {
     /*
     0-3   Nachts
     6-9   Morgens
@@ -20,33 +36,48 @@ export function getForecastData( data:any ):Array<IFullDayData> {
     18-21 Abends
     */
 
-    let forecastData:Array<IFullDayData> = new Array<IFullDayData>();
+    let forecastData:Array<IDayData> = new Array<IDayData>();
 
-    const parsedHoursData: Array< Array<IHourData> > = getParsedHoursData( data.list ); 
-    const hoursToday:Array<IHourData> = parsedHoursData[0];
+    const parsedHoursData: Array< Array<IHourData> > = getParsedHoursData( data.list );
+    const todayList: Array<IHourData> = parsedHoursData[0];
     const city:string = data.city.name;
+    const country:string = data.city.country;
 
     for( let i=1; i<parsedHoursData.length; i++ ) {
         // parsedHourData[0] contains all hours for today
         // parsedHourData[1-n] contains all hours for every other forecast days
 
-        let dayList: Array<IHourData>     = parsedHoursData[i];
         let dayPeriods: Array<IDayPeriod> = new Array<IDayPeriod>();
+        let dayList: Array<IHourData>     = parsedHoursData[i];
         let date:string = dayList[0].date;
+        let year:number = dayList[0].year;
 
         for( let b=0; b<dayList.length; b+=2 ) {
-
             let dayPeriod:IDayPeriod = getDayPeriod(dayList[b], dayList[b+1]);
             dayPeriods.push( dayPeriod );
         }
 
-        let fullDayData:IFullDayData = {
+        // Determine the related week day.
+        const hData:IHourData = dayList[0];
+        const day:number = hData.weekDay;
+
+        // Determine the min/max temperature (Todo: we still have to calculate it corrrect)
+        const tempMin: number = dayList[2].temperature; // 6 o'clock in the morning
+        const tempMax: number = dayList[6].temperature; // 3 o'clock afternoon
+
+        let dayData:IDayData = {
+            country: country,
             city: city,
             date: date,
-            dayPeriods: dayPeriods
+            year: year,
+            dayShort: dayMap[day][0],
+            dayLong: dayMap[day][1],
+            tempMin: tempMin,
+            tempMax: tempMax,
+            dayPeriods: dayPeriods, 
         }
 
-        forecastData.push( fullDayData );
+        forecastData.push( dayData );
 
     }
 
@@ -56,19 +87,35 @@ export function getForecastData( data:any ):Array<IFullDayData> {
 function getDayPeriod( h1:IHourData, h2:IHourData): IDayPeriod {
 
     const temp:Array<number>   = sortAscending(h1.temperature, h2.temperature);
+    const tempF:Array<number>   = sortAscending(h1.feelsLike, h2.feelsLike);
     const clouds:Array<number> = sortAscending(h1.clouds, h2.clouds);
+    const wind:Array<number> = sortAscending(h1.wind, h2.wind);
+    const rain:Array<number> = sortAscending(h1.rain, h2.rain);
+    const humidity:Array<number> = sortAscending(h1.humidity, h2.humidity);
     const icons:Array<string>  = getIcons(h1.icon, h2.icon);
 
     let dayPeriod:IDayPeriod = {
         dayTime: getDayTime( h1.hour ), // Morgens, Mittags, Abends...
-        temperature: temp.length === 1 ? temp[0]+" Grad" : temp[0]+ " - " + temp[1]+" Grad",
+        temperature: temp.length === 1 ? temp[0]+" °C" : temp[0]+ " - " + temp[1]+" °C",
+        feelsLike: tempF.length === 1 ? tempF[0]+" °C" : tempF[0]+ " - " + tempF[1]+" °C",
         description: getDescription( h1.description, h2.description ),
         clouds: clouds.length === 1 ? clouds[0]+" %" : clouds[0]+ " - " + clouds[1]+" %",
+        wind: wind.length === 1 ? wind[0]+" Km/h" : wind[0]+ " - " + wind[1]+" Km/h",
+        rain: rain.length === 1 ? rain[0]+" mm" : rain[0]+ " - " + rain[1]+" mm",
+        humidity: humidity.length === 1 ? humidity[0]+" %" : humidity[0]+ " - " + humidity[1]+" %",
+        pressure: h1.pressure + " hPa",
         icon1URL: icons[0],
         icon2URL: icons[1],
         isDayTime: h1.icon.charAt(2) === "d", // e.g. 04d@2x.png / 04n@2x.png
-        isDayAndNightTime: h1.icon.charAt(2) !== h2.icon.charAt(2),
     }
+
+    /*
+        feelsLike: string,
+        wind: string,
+        rain: string,
+        humidity: string,
+        pressure: string,
+    */
 
     return dayPeriod;
 
@@ -114,11 +161,12 @@ function getParsedHoursData( weatherList: Array<any> ): Array< Array<IHourData> 
         let dt   = listItem.dt_txt;
         let date = new Date(dt);
 
-        let day:string = "" + date.getDate();
-        let month = date.getMonth()+1;
-        let year  = date.getFullYear();
-        let hour  = date.getHours();
-        let d = day + "." + month + "." + year; 
+        let day:string   = "" + date.getDate();
+        let weekDay:number = date.getDay();
+        let month:number = date.getMonth()+1;
+        let year:number  = date.getFullYear();
+        let hour:number  = date.getHours();
+        let d:string     = day + "." + month + "."; 
 
         if( i === 0 ) {
             curDay = day;
@@ -126,10 +174,17 @@ function getParsedHoursData( weatherList: Array<any> ): Array< Array<IHourData> 
 
         const hourData: IHourData = {
             date: d,
+            year: year,
             hour: hour,
+            weekDay: weekDay,
             temperature: Math.round(listItem.main.temp),
+            feelsLike: Math.round(listItem.main.feels_like),
             description:  listItem.weather[0].description,
             clouds: listItem.clouds.all,
+            wind: getWindSpeed( listItem.wind.speed ),
+            rain: listItem.rain ? listItem.rain["3d"] : 0,
+            humidity: listItem.main.humidity,
+            pressure: listItem.main.pressure,
             icon: listItem.weather[0].icon
         }
 
@@ -143,4 +198,11 @@ function getParsedHoursData( weatherList: Array<any> ): Array< Array<IHourData> 
         dayList.push(hourData);
     }
     return allDaysList;
+
+    function getWindSpeed( n:number ):number {
+        if( !n ) {
+            return 0;
+        }
+        return Math.round(n * 3.6);
+    }
 }
