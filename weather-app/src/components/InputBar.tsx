@@ -39,7 +39,7 @@ class InputBar extends Component<IProps, IState> {
 
     private onKeyPress( ev:any ) {
         if( ev.key === "Enter") {
-            this.loadWeatherData();
+            //this.loadWeatherData();
         }
     }
 
