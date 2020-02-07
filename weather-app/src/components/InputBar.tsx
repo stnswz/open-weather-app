@@ -30,25 +30,35 @@ class InputBar extends Component<IProps, IState> {
 
         this.onTextChange = this.onTextChange.bind(this);
         this.onButtonClick = this.onButtonClick.bind(this);
+        this.loadWeatherData = this.loadWeatherData.bind(this);
     }
 
     private onTextChange( ev:any ) {
         this.setState({inputValue:ev.target.value});
     }
 
-    private onButtonClick( ev:any ) {
-        if( !this.props.loadWeatherData ) {
-            return;
+    private onKeyPress( ev:any ) {
+        if( ev.key === "Enter") {
+            this.loadWeatherData();
         }
-        this.props.loadWeatherData( this.state.inputValue );
+    }
+
+    private onButtonClick( ev:any ) {
+        this.loadWeatherData();
+    }
+
+    private loadWeatherData() {
+        if( this.props.loadWeatherData && this.state.inputValue ) {
+            this.props.loadWeatherData( this.state.inputValue );
+        }
     }
 
     public render(): ReactElement {
 
         return (
             <div id="inputBar">
-                <input id="textInput" onChange={this.onTextChange} type="text" value={this.state.inputValue} placeholder="Das Wetter in..."/> 
-                <div id="button" onClick={this.onButtonClick}>Anzeigen</div>
+                <input id="textInput" onKeyPress={this.onKeyPress} onChange={this.onTextChange} type="text" value={this.state.inputValue} placeholder="Suche nach Ort..."/> 
+                <div id="button" onClick={this.onButtonClick}></div>
             </div>
         );
     }

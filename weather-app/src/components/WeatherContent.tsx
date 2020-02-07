@@ -1,6 +1,5 @@
 import React, { Component, ReactElement, Fragment } from "react";
-import WeatherToday from "./weatherContent/WeatherToday";
-import WeatherForecast from "./weatherContent/WeatherForecast";
+import WeatherColumn from "./weatherContent/WeatherColumn";
 
 interface IState {
     /** empty state */
@@ -22,8 +21,15 @@ class WeatherContent extends Component<IProps, IState> {
 
         return (
             <Fragment>
-                <WeatherToday/>
-                <WeatherForecast/>
+                <div className="contentHeader">
+                    Das Wetter für Berlin am Donnerstag, 06.02.2020
+                </div>
+                <div className="contentMain">
+                    <WeatherColumn />
+                    <WeatherColumn />
+                    <WeatherColumn />
+                    <WeatherColumn />
+                </div>
             </Fragment>
         );
     }

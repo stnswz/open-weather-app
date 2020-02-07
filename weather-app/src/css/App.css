@@ -12,26 +12,36 @@ div {
 }
 
 #innerColumn {
-    width: 75vw;
+    width: 90vw;
     height: 100%;
-    background-color: #eee;
+    background-color: #fff;
     border-left: 0px solid #ccc;
     border-right: 0px solid #ccc;
     overflow: visible;
 }
+@media only screen and (min-width: 1000px ) {
+    #innerColumn {
+        width: 75vw;
+    }
+}
 #innerContent {
-    background-color: #eee;
+    background-color: #fff;
+    width: 100%;
+}
+
+#topContainer {
+    background-color: #76acea;
     width: 100%;
 }
 
 #inputBar {
-    padding: 20px;
+    padding: 15px;
     display:flex;
     justify-content:center;
     align-items: flex-start;
     border-top: 0px solid #222;
     border-bottom: 0px solid #333;
-    background-color: rgba(231, 177, 29, 0.80);
+    background-color: #3769b6;
 
     -webkit-box-shadow: 0px 5px 10px -3px rgba(34,34,34,0.6);
     -moz-box-shadow: 0px 5px 10px -3px rgba(34,34,34,0.6);
@@ -39,126 +49,223 @@ div {
 }
 #textInput {
     width: 300px;
+    height: 1.5em;
     font-size: 1em;
-    padding:5px;
-    color: #ddd;
-    background-color: #333;
+    padding: 0.25em;
+    padding-left: 0.5em;
+    color: #333;
+    background-color: #fff;
     border: 1px solid #666;
-    border-left: 0px;
-    border-right: 0px;
+    border-radius: 8px 0px 0px 8px;
 }
 #button {
     display: inline-block;
-    font-size: 1em;
-    padding:5px 15px;
-    margin-left: 10px;
-    margin-top: -1px;
-    border: 1px solid #333;
-    border-radius: 3px;
-    background-color: #eee;
+    width: 2.5em;
+    height: 2.1em;
+    border: 1px solid #666;
+    border-left: none;
+    border-radius: 0px 8px 8px 0px;
+    background-color: #fff;
+    background-image: url(./images/SearchIcon.svg);
+    background-repeat: no-repeat;
+    background-size: 1.5em;
+    background-position-x: 0.5em;
+    background-position-y: 0.25em;
     cursor: pointer;
 }
 #button:hover {
-    background-color: #ddd;
+    background-color: #eee;
 }
 
-.dayBox {
-    margin: 0px;
-    background-color:none;
-}
-.dayBoxTitle {
-    font-size: 1.25em;
-    margin-left: 1%;
-}
-.dayBoxBorder {
-    height: 1px;
-    background-color: #666;
-    margin-left: 1%;
-    margin-right: 1%;
-    margin-top: 10px;
-}
-.dayFlexBox {
-    width: 100%;
-    padding-right: 1%;
+#selectionBar {
     display:flex;
     justify-content:flex-start;
     align-items: flex-start;
     flex-direction: row;
-    flex-wrap: wrap;
+    flex-wrap:nowrap;
+    margin-top: 35px;
+    height: 70px;
 }
-.weatherTodayBox {
-    margin-left: 1%;
-    margin-bottom: 20px;
+#contentContainer {
+    margin-top: 80px;
+    border-left: 1px solid #ddd;
+    width:90%;
+    margin-left: 5%;
+}
+@media only screen and (min-width: 1260px ) {
+    #contentContainer {
+        width:80%;
+        margin-left: 10%;
+    }
+}
+@media only screen and (min-width: 1550px ) {
+    #contentContainer {
+        width:70%;
+        margin-left: 15%;
+    }
+}
+.contentHeader {
+    padding-left: 10px;
+    color: #2d5ba9;
+    font-size: 1.1em;
+    font-weight: 600;
+}
+.contentMain {
+    display:flex;
+    justify-content:flex-start;
+    align-items: flex-start;
+    flex-direction: row;
+    flex-wrap:wrap;
+}
+.column {
     font-size: 1em;
-    display:flex;
-    justify-content:flex-start;
-    align-items: flex-start;
-    flex-direction: row;
-    flex-wrap: wrap;
+    width: 25%;
+    min-width: 165px;
+    margin-top: 1em;
+    border-right: 1px solid #ddd;
+    padding: 0px 10px;
+    height: 500px;
 }
-.weatherTodayText {
-    margin-left: 5px;
+.colTop {
+    background: #fff;
+    text-align: center;
+    min-height: 16em;
 }
-.hourBoxWrap {
-    width: 24%;
-    min-width:230px;
-    margin-left: 1%;
-    margin-bottom: 10px;
+.colTop .dayTime {
+    position: relative;
+    z-index: 10;
+    height: 2.5em;
+    padding-top: 0.5em;
+    margin: 0px -5px;
+    background: #76acea;
+    letter-spacing: 0.08em;
+    font-weight: 600;
 }
-.hourBox, .hourBoxNight {
-    background-color: rgba(231, 177, 29, 0.75);
-    color: #333;
-    border-radius: 6px;
-    border: 1px solid #333;
-    padding:10px;
-    display:flex;
-    justify-content:flex-start;
-    align-items: flex-start;
-    flex-direction: row;
-    flex-wrap: nowrap;
+.colTop .iconBox {
+    height: 100px;
+    margin: 0px -5px;
+    background: #76acea; /* Old browsers */
+    background: -moz-linear-gradient(top,  #76acea 1%, #ffffff 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top,  #76acea 1%,#ffffff 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom,  #76acea 1%,#ffffff 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#76acea', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
 }
-.hourBoxNight {
-    background-color: rgba(37, 28, 55, 0.65);
-}
-.time {
-    font-size: 1em;
-}
-.hourImage {
-    margin: 0px;
-    width: 100px;
-}
-.hourImageBig, .hourImageBigNight {
-    margin: 0px;
-    margin-right: 15px;
-    width: 145px;
-    padding: 10px;
-    padding-top: 0px;
-    background-color: rgba(231, 177, 29, 0.65);
-    border-radius: 6px 0px 0px 6px;
-}
-.hourImageBigNight {
-    /*background-color: rgba(29, 49, 231, 0.75);*/
-    /*background-color: rgba(9, 19, 73, 0.75);*/
-    /*background-color: rgba(37, 28, 55, 0.75);*/
-    background-color: rgba(37, 28, 55, 0.65);
-}
-.hourOutput {
-    width: 100%;
-    margin-left: 10px;
-    background-color: #eee;
-    margin: -10px;
-    padding: 10px;
-    border-radius: 0px 6px 6px 0px;
-}
-.icon, .icon2 {
-    width: 60px;
-    margin-left: -5px;
+.colTop .iconBig {
+    display: inline-block;
+    width: 120px;
+    height: 120px;
+    margin-left: 0px;
     margin-top: -10px;
+    margin-bottom: -1em;
 }
-.icon2 {
-    margin-top: -25px;
+.colTop .iconX2 {
+    display: inline-block;
+    width: 80px;
+    height: 80px;
+    margin-right: -10px;
+    margin-left: -10px;
+}
+.colTop .temp {
+    font-weight: 600;
+    font-size: 1.1em;
+    letter-spacing: 0.08em;
+    margin-top: 0em;
     z-index: 10;
 }
-.iconBig {
-    width: 125px;
+.colTop .desc {
+    margin-top: 1em;
+}
+.colBottom {
+    background: #fff;
+    text-align: left;
+}
+.colBottom .clouds {
+    margin-top: 1em;
+    background-image: url(./images/Clouds.svg);
+    background-repeat: no-repeat;
+    background-size: 20px;
+    background-position-x: 5px;
+    padding-left: 40px;
+}
+.colBottom .wind {
+    margin-top: 1em;
+    background-image: url(./images/Wind.svg);
+    background-repeat: no-repeat;
+    background-size: 30px;
+    padding-left: 40px;
+    padding-top: 5px;
+}
+.colBottom .feels {
+    margin-top: 1em;
+    background-image: url(./images/Heart.svg);
+    background-repeat: no-repeat;
+    background-size: 20px;
+    background-position-x: 5px;
+    padding-left: 40px;
+}
+.colBottom .rain {
+    margin-top: 1em;
+    background-image: url(./images/RainDrops.svg);
+    background-repeat: no-repeat;
+    background-size: 20px;
+    background-position-x: 5px;
+    padding-left: 40px;
+    margin-right: -10px;
+}
+.colBottom .humidity {
+    margin-top: 1em;
+    background-image: url(./images/Humidity3.svg);
+    background-repeat: no-repeat;
+    background-size: 20px 20px;
+    background-position-x: 5px;
+    padding-left: 40px;
+}
+.colBottom .pressure {
+    margin-top: 1em;
+    margin-right: -10px;
+}
+.selectionButton, .selectionButtonSelected {
+    width: 140px;
+    height: 100%;
+    margin-right: 3px;
+    padding-left: 10px;
+    padding-top: 5px;
+    color: #fff;
+    cursor: pointer;
+    overflow: hidden;
+    /* Permalink: https://colorzilla.com/gradient-editor/#4479c8+0,2d5ba9+49,4479c8+100 */
+    background: #4479c8; /* Old browsers */
+    background: -moz-linear-gradient(top,  #4479c8 0%, #2d5ba9 49%, #4479c8 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top,  #4479c8 0%,#2d5ba9 49%,#4479c8 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom,  #4479c8 0%,#2d5ba9 49%,#4479c8 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4479c8', endColorstr='#4479c8',GradientType=0 ); /* IE6-9 */
+
+}
+.selectionButtonSelected, .selectionButton:hover {
+    background: #fff;
+    color: #2d5ba9;
+}
+.selTop {
+    font-size: 0.95em;
+    letter-spacing: 0.08em;
+}
+.selBottom {
+    margin-top: 5px;
+    display:flex;
+    justify-content:flex-start;
+    align-items: flex-start;
+    flex-direction: row;
+}
+.selLeft {
+    width: 60px;
+}
+.selRight {
+    font-size: 0.9em;
+    text-align: center;
+    width: 70px;
+}
+.icon {
+    width: 50px;
+    margin-left: 0px;
+    margin-top: -10px;
 }
