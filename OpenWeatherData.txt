@@ -1,0 +1,19 @@
+
+Main:
+
+Temperatur
+gefühlt (feels_like)
+Luftdruck (pressure) 1020 hPa
+Luftfeuchtigkeit (humidity) 80 %
+
+Clouds:
+all: 96
+
+Wind:
+speed: 5.23 Meter/s (umrechnen in Km/h)
+
+Rain (null wenn nicht gegeben):
+3h: 0.75 Niederschlagsmenge in mm
+
+Sys:
+pod: n/d?

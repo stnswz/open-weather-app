@@ -1,0 +1,276 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700&display=swap');
+
+body {
+    margin: 0px;
+    padding: 0px;
+    background-color: #76acea;
+    color: #333;
+    height: 100%;
+    font-family: "Open Sans", Arial, Helvetica, sans-serif;
+}
+div {
+    box-sizing: border-box;
+}
+
+#mainContent {
+    width: 100vw; /*vw: viewport width / vh: viewport height*/
+    height: 100vh;
+    display:flex;
+    justify-content:center;
+    align-items: flex-start;
+    overflow-x: hidden;
+}
+
+#innerColumn {
+    width: 90vw;
+    height: 100%;
+    background-color: #fff;
+    border-left: 0px solid #ccc;
+    border-right: 0px solid #ccc;
+    overflow: visible;
+}
+@media only screen and (min-width: 1000px ) {
+    #innerColumn {
+        width: 75vw;
+    }
+}
+#innerContent {
+    background-color: #fff;
+    width: 100%;
+}
+
+#topContainer {
+    background-color: #76acea;
+    width: 100%;
+}
+
+#inputBar {
+    padding: 15px;
+    display:flex;
+    justify-content:center;
+    align-items: flex-start;
+    border-top: 0px solid #222;
+    border-bottom: 0px solid #333;
+    background-color: #3769b6;
+
+    -webkit-box-shadow: 0px 5px 10px -3px rgba(34,34,34,0.6);
+    -moz-box-shadow: 0px 5px 10px -3px rgba(34,34,34,0.6);
+    box-shadow: 0px 5px 10px -3px rgba(34,34,34,0.6);
+}
+#textInput {
+    width: 300px;
+    font-size: 1em;
+    padding:5px;
+    color: #333;
+    background-color: #eee;
+    border: 1px solid #666;
+    border-left: 0px;
+    border-right: 0px;
+}
+#button {
+    display: inline-block;
+    font-size: 1em;
+    padding:5px 15px;
+    margin-left: 10px;
+    margin-top: -1px;
+    border: 1px solid #333;
+    border-radius: 3px;
+    background-color: #eee;
+    cursor: pointer;
+}
+#button:hover {
+    background-color: #ddd;
+}
+
+#selectionBar {
+    display:flex;
+    justify-content:flex-start;
+    align-items: flex-start;
+    flex-direction: row;
+    flex-wrap:nowrap;
+    margin-top: 35px;
+    height: 70px;
+}
+#contentContainer {
+    margin-top: 80px;
+    border-left: 1px solid #ddd;
+    width:90%;
+    margin-left: 5%;
+}
+@media only screen and (min-width: 1260px ) {
+    #contentContainer {
+        width:80%;
+        margin-left: 10%;
+    }
+}
+@media only screen and (min-width: 1550px ) {
+    #contentContainer {
+        width:70%;
+        margin-left: 15%;
+    }
+}
+.contentHeader {
+    height: 30px;
+    padding-left: 10px;
+    color: #2d5ba9;
+    font-size: 1.1em;
+    font-weight: 600;
+}
+.contentMain {
+    display:flex;
+    justify-content:flex-start;
+    align-items: flex-start;
+    flex-direction: row;
+    flex-wrap:wrap;
+}
+.column {
+    font-size: 1em;
+    width: 25%;
+    min-width: 165px;
+    margin-top: 20px;
+    border-right: 1px solid #ddd;
+    padding: 0px 10px;
+    height: 500px;
+}
+.colTop {
+    background: #fff;
+    text-align: center;
+    min-height: 16em;
+}
+.colTop .dayTime {
+    position: relative;
+    z-index: 10;
+    height: 2.5em;
+    padding-top: 0.5em;
+    margin: 0px -5px;
+    background: #76acea;
+    letter-spacing: 0.08em;
+    font-weight: 600;
+}
+.colTop .iconBox {
+    height: 100px;
+    margin: 0px -5px;
+    background: #76acea; /* Old browsers */
+    background: -moz-linear-gradient(top,  #76acea 1%, #ffffff 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top,  #76acea 1%,#ffffff 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom,  #76acea 1%,#ffffff 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#76acea', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
+}
+.colTop .iconBig {
+    display: inline-block;
+    width: 120px;
+    height: 120px;
+    margin-left: 0px;
+    margin-top: -10px;
+    margin-bottom: -1em;
+}
+.colTop .iconX2 {
+    display: inline-block;
+    width: 80px;
+    height: 80px;
+    margin-right: -10px;
+    margin-left: -10px;
+}
+.colTop .temp {
+    font-weight: 600;
+    font-size: 1.1em;
+    letter-spacing: 0.08em;
+    margin-top: 0em;
+    z-index: 10;
+}
+.colTop .desc {
+    margin-top: 1em;
+}
+.colBottom {
+    background: #fff;
+    text-align: left;
+}
+.colBottom .clouds {
+    margin-top: 1em;
+    background-image: url(images/Clouds.svg);
+    background-repeat: no-repeat;
+    background-size: 20px;
+    background-position-x: 5px;
+    padding-left: 40px;
+}
+.colBottom .wind {
+    margin-top: 1em;
+    background-image: url(images/Wind.svg);
+    background-repeat: no-repeat;
+    background-size: 30px;
+    padding-left: 40px;
+    padding-top: 5px;
+}
+.colBottom .feels {
+    margin-top: 1em;
+    background-image: url(images/Heart.svg);
+    background-repeat: no-repeat;
+    background-size: 20px;
+    background-position-x: 5px;
+    padding-left: 40px;
+}
+.colBottom .rain {
+    margin-top: 1em;
+    background-image: url(images/RainDrops.svg);
+    background-repeat: no-repeat;
+    background-size: 20px;
+    background-position-x: 5px;
+    padding-left: 40px;
+}
+.colBottom .humidity {
+    margin-top: 1em;
+    background-image: url(images/Humidity3.svg);
+    background-repeat: no-repeat;
+    background-size: 20px 20px;
+    background-position-x: 5px;
+    padding-left: 40px;
+}
+.colBottom .pressure {
+    margin-top: 1em;
+    margin-right: -10px;
+}
+.selectionButton, .selectionButtonSelected {
+    width: 140px;
+    height: 100%;
+    margin-right: 3px;
+    padding-left: 10px;
+    padding-top: 5px;
+    color: #fff;
+    cursor: pointer;
+    overflow: hidden;
+    /* Permalink: https://colorzilla.com/gradient-editor/#4479c8+0,2d5ba9+49,4479c8+100 */
+    background: #4479c8; /* Old browsers */
+    background: -moz-linear-gradient(top,  #4479c8 0%, #2d5ba9 49%, #4479c8 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top,  #4479c8 0%,#2d5ba9 49%,#4479c8 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom,  #4479c8 0%,#2d5ba9 49%,#4479c8 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4479c8', endColorstr='#4479c8',GradientType=0 ); /* IE6-9 */
+
+}
+.selectionButtonSelected, .selectionButton:hover {
+    background: #fff;
+    color: #2d5ba9;
+}
+.selTop {
+    font-size: 0.95em;
+    letter-spacing: 0.08em;
+}
+.selBottom {
+    margin-top: 5px;
+    display:flex;
+    justify-content:flex-start;
+    align-items: flex-start;
+    flex-direction: row;
+}
+.selLeft {
+    width: 60px;
+}
+.selRight {
+    font-size: 0.9em;
+    text-align: center;
+    width: 70px;
+}
+.icon {
+    width: 50px;
+    margin-left: 0px;
+    margin-top: -10px;
+}
