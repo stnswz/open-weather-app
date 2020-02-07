@@ -1,8 +1,7 @@
 //import { RequestApi } from '../../requestApi/requestApi';
 import types from './../constants';
 import {RequestApi} from "../../requestApi/requestApi";
-import {ICurrentWeatherData} from "../../components/definitions/ICurrentWeatherData";
-import {IFullDayData} from "../../components/definitions/IFullDayData";
+import {IDayData} from "../../components/definitions/IDayData";
 import {getForecastData} from "../../utils/parseFunctions";
 
 export function loadWeatherData(city:string) {
@@ -19,14 +18,14 @@ export function loadWeatherData(city:string) {
             // City nicht angegeben: {"cod":"400","message":"Nothing to geocode"}
 
             const data:any = await RequestApi.getWeatherData( city );
-            //const currentWeatherData:ICurrentWeatherData = getCurrentWeatherData( data );
-            const forcastData: Array<IFullDayData> = getForecastData( data );
+            const forcastData: Array<IDayData> = getForecastData( data );
 
             dispatch({
                 type: types.WEATHER_DATA_LOADED,
                 payload: {
-                    currentWeatherData: undefined,
                     forecastData: forcastData,
+                    city: forcastData[0].city,
+                    country: forcastData[0].country,
                 }
             });
         }
@@ -34,7 +33,22 @@ export function loadWeatherData(city:string) {
             console.log(e.message + " " + e.code);
             dispatch({
                 type: types.LOADING_ERROR,
+                payload: {
+                    errorCode: e.message,
+                    errorMessage: e.code,
+                }
             });
         }
+    };
+}
+
+export function setSelectedIndex(index:number) {
+    return async (dispatch:any, getState:any) => {
+        dispatch({
+            type: types.SET_SELECTED_INDEX,
+            payload: {
+                index: index,
+            }
+        });
     };
 }

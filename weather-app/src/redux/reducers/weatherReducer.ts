@@ -1,11 +1,12 @@
 import types from './../constants';
-import {ICurrentWeatherData} from "../../components/definitions/ICurrentWeatherData";
-import {IFullDayData} from "../../components/definitions/IFullDayData";
+import {IDayData} from "../../components/definitions/IDayData";
 
 interface IWeatherState {
     dataIsLoading: boolean,
-    currentWeatherData: ICurrentWeatherData,
-    forecastData: Array<IFullDayData>,
+    forecastData: Array<IDayData>,
+    country: string,
+    city: string,
+    selectedIndex:number,
     loadingError: boolean,
     errorCode: string,
     errorMessage: string,
@@ -14,23 +15,27 @@ interface IWeatherState {
 const initialState:IWeatherState = {
     dataIsLoading: false,
     loadingError: false,
+    selectedIndex: 0,
+    country: "",
+    city: "",
     errorCode: "",
     errorMessage: "",
-    currentWeatherData: undefined!,
-    forecastData: new Array<IFullDayData>(),
+    forecastData: new Array<IDayData>(),
 }
 
 const reducer = (state:IWeatherState = initialState, action:any) => {
     switch (action.type) {
         case types.WEATHER_DATA_LOADING:
-            return { ...state, dataIsLoading: true, loadingError: false, errorCode: "" }
+            return { ...state, dataIsLoading: true, city: "", country: "", selectedIndex: 0, loadingError: false, errorCode: "" }
         case types.WEATHER_DATA_LOADED:
             return { ...state, 
                     dataIsLoading: false, 
                     loadingError: false, 
                     errorCode: "",
-                    currentWeatherData: action.payload.currentWeatherData,
+                    selectedIndex: 0,
                     forecastData: action.payload.forecastData,
+                    city: action.payload.city,
+                    country: action.payload.country,
             }
         case types.LOADING_ERROR:
             return { ...state, 
@@ -38,6 +43,9 @@ const reducer = (state:IWeatherState = initialState, action:any) => {
                     loadingError: true, 
                     errorCode: action.payload.errorCode, 
                     errorMessage: action.payload.errorMessage,
+            }
+        case types.SET_SELECTED_INDEX:
+            return { ...state, selectedIndex: action.payload.index,
             }
         default:
             return state;
