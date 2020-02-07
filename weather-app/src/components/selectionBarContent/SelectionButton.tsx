@@ -1,21 +1,24 @@
 import React, { Component, ReactElement } from "react";
 import { connect } from 'react-redux';
-//import { loadWeatherData } from "../redux/actions/weatherActions";
+import { IDayData } from "./../definitions/IDayData";
+import { IDayPeriod } from "../definitions/IDayPeriod";
+import { setSelectedIndex } from "./../../redux/actions/weatherActions";
 
 interface IState {
     /* empty state */
 }
 interface IProps {
-    selectionIndex:number;
-    //loadingError?: boolean;
-    //loadWeatherData?: Function;
+    dayData?:IDayData,
+    selectedIndex?:number,
+    index:number,
+    setSelectedIndex?: Function;
 }
 
 const state = (store:any) => ({
-    //loadingError: store.weatherState.loadingError,
+    selectedIndex: store.weatherState.selectedIndex,
 });
 const operations = (dispatch:any) => ({
-    //loadWeatherData: (city:string) => { dispatch( loadWeatherData(city) ) },
+    setSelectedIndex: (index:number) => { dispatch( setSelectedIndex(index) ) },
 });
 
 @(connect(state, operations) as any)
@@ -23,29 +26,42 @@ class SelectionButton extends Component<IProps, IState> {
 
     constructor(props:IProps) {
         super(props);
-        this.state = {
-            
+        this.state = {}
+        this.onButtonClick = this.onButtonClick.bind(this);
+    }
+
+    onButtonClick( ev:any ) {
+        if(this.props.setSelectedIndex) {
+            this.props.setSelectedIndex( this.props.index );
         }
     }
 
     public render(): ReactElement {
 
-        const buttonClass:string = this.props.selectionIndex === 0 ? "selectionButtonSelected" : "selectionButton"
+        const buttonClass:string = this.props.index === this.props.selectedIndex ? "selectionButtonSelected" : "selectionButton"
 
-        return (
-            <div className={buttonClass}>
-                <div className="selTop">
-                    So 09.02
-                </div>
-                <div className="selBottom">
-                    <div className="selLeft">
-                        <img className="icon" src="http://openweathermap.org/img/wn/03d@2x.png" />
+        if( this.props.dayData ) {
+            // We use the temperature and weather icon thats shown for noon/afternoon
+            const noonPeriod:IDayPeriod = this.props.dayData.dayPeriods[2];
+            const iconURL:string = noonPeriod.icon1URL;
+            return (
+                <div className={buttonClass} onClick={this.onButtonClick}>
+                    <div className="selTop">
+                        {this.props.dayData.dayShort}  {this.props.dayData.date}
                     </div>
-                    <div className="selRight">
-                        6&deg; - 8&deg;
+                    <div className="selBottom">
+                        <div className="selLeft">
+                            <img className="icon" alt="" src={iconURL} />
+                        </div>
+                        <div className="selRight">
+                            <strong>{this.props.dayData.tempMax}&deg;</strong> / {this.props.dayData.tempMin}&deg;
+                        </div>
                     </div>
                 </div>
-            </div>
+            );
+        }
+        else return (
+            <div className="selectionButtonDisabled" ></div>
         );
     }
 }

@@ -30,9 +30,9 @@ class IconBox extends Component<IProps, IState> {
 
         return (
             <div className="iconBox">
-                <img className="iconBig" src="http://openweathermap.org/img/wn/10d@2x.png" />
-                {/*<img className="iconX2" src="http://openweathermap.org/img/wn/10d@2x.png" />
-                <img className="iconX2" src="http://openweathermap.org/img/wn/09d@2x.png" />*/}
+                <img className="iconBig" alt="" src="http://openweathermap.org/img/wn/10d@2x.png" />
+                {/*<img className="iconX2" alt="" src="http://openweathermap.org/img/wn/10d@2x.png" />
+                <img className="iconX2" alt="" src="http://openweathermap.org/img/wn/09d@2x.png" />*/}
             </div>
         );
     }

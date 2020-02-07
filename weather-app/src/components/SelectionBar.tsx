@@ -1,18 +1,19 @@
 import React, { Component, ReactElement } from "react";
 import { connect } from 'react-redux';
 import SelectionButton from "./selectionBarContent/SelectionButton";
+import {IDayData} from "./../components/definitions/IDayData";
 //import { loadWeatherData } from "../redux/actions/weatherActions";
 
 interface IState {
     /* empty state */
 }
 interface IProps {
-    //loadingError?: boolean;
+    forecastData?: Array<IDayData>,
     //loadWeatherData?: Function;
 }
 
 const state = (store:any) => ({
-    //loadingError: store.weatherState.loadingError,
+    forecastData: store.weatherState.forecastData,
 });
 const operations = (dispatch:any) => ({
     //loadWeatherData: (city:string) => { dispatch( loadWeatherData(city) ) },
@@ -28,15 +29,27 @@ class SelectionBar extends Component<IProps, IState> {
         }
     }
 
+    private getDefaultButtons():Array<ReactElement> {
+        const buttons: Array<ReactElement> = new Array<ReactElement>();
+        for( let i=0; i<4; i++ ) {
+            const button:ReactElement = <SelectionButton dayData={null!} index={i} />
+            buttons.push(button);
+        }
+        return buttons; 
+    }
+
     public render(): ReactElement {
+
+        const forecastData: Array<IDayData> = this.props.forecastData || new Array<IDayData>();
+        const numberForecastDays:number = forecastData.length;
 
         return (
             <div id="selectionBar">
-                <SelectionButton selectionIndex={0} />
-                <SelectionButton selectionIndex={1} />
-                <SelectionButton selectionIndex={2} />
-                <SelectionButton selectionIndex={3} />
-                <SelectionButton selectionIndex={4} />
+                {
+                    numberForecastDays ? 
+                    forecastData.map( (dayData, index) => <SelectionButton dayData={dayData} index={index} /> ) : 
+                    this.getDefaultButtons()
+                }
             </div>
         );
     }
