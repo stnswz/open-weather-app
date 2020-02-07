@@ -59,27 +59,32 @@ div {
 }
 #textInput {
     width: 300px;
+    height: 1.5em;
     font-size: 1em;
-    padding:5px;
+    padding: 0.25em;
+    padding-left: 0.5em;
     color: #333;
-    background-color: #eee;
+    background-color: #fff;
     border: 1px solid #666;
-    border-left: 0px;
-    border-right: 0px;
+    border-radius: 8px 0px 0px 8px;
 }
 #button {
     display: inline-block;
-    font-size: 1em;
-    padding:5px 15px;
-    margin-left: 10px;
-    margin-top: -1px;
-    border: 1px solid #333;
-    border-radius: 3px;
-    background-color: #eee;
+    width: 2.5em;
+    height: 2.1em;
+    border: 1px solid #666;
+    border-left: none;
+    border-radius: 0px 8px 8px 0px;
+    background-color: #fff;
+    background-image: url(images/SearchIcon.svg);
+    background-repeat: no-repeat;
+    background-size: 1.5em;
+    background-position-x: 0.5em;
+    background-position-y: 0.25em;
     cursor: pointer;
 }
 #button:hover {
-    background-color: #ddd;
+    background-color: #eee;
 }
 
 #selectionBar {
