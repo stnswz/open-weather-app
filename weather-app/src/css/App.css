@@ -47,6 +47,7 @@ div {
     -moz-box-shadow: 0px 5px 10px -3px rgba(34,34,34,0.6);
     box-shadow: 0px 5px 10px -3px rgba(34,34,34,0.6);
 }
+
 #textInput {
     width: 300px;
     height: 1.5em;
@@ -86,7 +87,7 @@ div {
     margin-top: 35px;
     height: 70px;
 }
-.selectionButton, .selectionButtonSelected, .selectionButtonDisabled {
+.selectionButton, .selectionButtonAnimated, .selectionButtonSelected, .selectionButtonDisabled {
     width: 140px;
     height: 100%;
     margin-right: 3px;
@@ -101,7 +102,14 @@ div {
     background: -webkit-linear-gradient(top,  #4479c8 0%,#2d5ba9 49%,#4479c8 100%); /* Chrome10-25,Safari5.1-6 */
     background: linear-gradient(to bottom,  #4479c8 0%,#2d5ba9 49%,#4479c8 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4479c8', endColorstr='#4479c8',GradientType=0 ); /* IE6-9 */
-
+}
+@keyframes opacityAnimation {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+.selectionButtonAnimated {
+    animation-name: opacityAnimation;
+    animation-duration: 1s;
 }
 .selectionButtonSelected, .selectionButton:hover {
     background: #fff;
@@ -109,7 +117,21 @@ div {
 }
 .selectionButtonDisabled {
     cursor: unset;
-    opacity: 0.5;
+    opacity: 0;
+}
+#infoContainer {
+    margin-top: 80px;
+    padding: 5%;
+    border: 1px solid #ccc;
+    border-left: 0px;
+    border-right: 0px;
+    text-align: center;
+    font-size: 1.25em;
+    font-weight: 600;
+}
+#infoContainer .error {
+    color: #cc0000;
+    font-size: 1em;
 }
 #contentContainer {
     margin-top: 80px;
@@ -155,6 +177,8 @@ div {
     background: #fff;
     text-align: center;
     min-height: 16em;
+    animation-name: opacityAnimation;
+    animation-duration: 1s;
 }
 .colTop .dayTime {
     position: relative;
@@ -180,7 +204,7 @@ div {
     width: 120px;
     height: 120px;
     margin-left: 0px;
-    margin-top: -10px;
+    margin-top: -20px;
     margin-bottom: -1em;
 }
 .colTop .iconX2 {
@@ -203,6 +227,8 @@ div {
 .colBottom {
     background: #fff;
     text-align: left;
+    animation-name: opacityAnimation;
+    animation-duration: 2s;
 }
 .colBottom .clouds {
     margin-top: 1em;
@@ -227,6 +253,7 @@ div {
     background-size: 20px;
     background-position-x: 5px;
     padding-left: 40px;
+    margin-right: -10px;
 }
 .colBottom .rain {
     margin-top: 1em;
