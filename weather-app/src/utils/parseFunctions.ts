@@ -29,12 +29,6 @@ const dayMap:any = {
 }
 
 export function getForecastData( data:any ):Array<IDayData> {
-    /*
-    0-3   Nachts
-    6-9   Morgens
-    12-15 Mittags
-    18-21 Abends
-    */
 
     let forecastData:Array<IDayData> = new Array<IDayData>();
     if( !data || data.cod !== "200" ) {
@@ -56,14 +50,15 @@ export function getForecastData( data:any ):Array<IDayData> {
 
         if( i === 0 && dayList.length % 2 === 1) {
             // Special step for the first data array (= todays data array), it's length 
-            // can be eneven since it doesn't must contain all 8 hours of a day.
+            // can be uneven since it doesn't must contain all 8 hours of a day.
             const hourData: IHourData = dayList.length > 1 ? dayList.shift()! : dayList[0];
             let dayPeriod:IDayPeriod = getDayPeriod( hourData, undefined );
             dayPeriods.push( dayPeriod );
         }
 
         for( let b=0; b<dayList.length && dayList.length>1; b+=2 ) {
-            // The API has send us 8 hour for one day. We bind 2 hours together to one day period.
+            // The API has send us 8 hour for one day. We bind following 2 hours together to one day period:
+            // 0h-3h Night / 6h-9h Morning / 12h-15h Noon / 18h-21h Evening
             let dayPeriod:IDayPeriod = getDayPeriod(dayList[b], dayList[b+1]);
             dayPeriods.push( dayPeriod );
         }
@@ -72,7 +67,7 @@ export function getForecastData( data:any ):Array<IDayData> {
         const hData:IHourData = dayList[0];
         const day:number = hData.weekDay;
 
-        // Determine the min/max temperature 
+        // Determine the min/max temperature for a day.
         const minMaxTemp:Array<number> = getMinMaxTemperature( dayList );
         const tempMin: number = minMaxTemp[0]; 
         const tempMax: number = minMaxTemp[1];
@@ -94,16 +89,6 @@ export function getForecastData( data:any ):Array<IDayData> {
     }
 
     return forecastData;
-}
-
-function getMinMaxTemperature(dayList:Array<IHourData>): Array<number> {
-    let numbers: Array<number> = new Array<number>();
-    for( let i=0; i<dayList.length; i++ ) {
-        numbers.push( dayList[i].temperature );
-    }
-    numbers.sort();
-
-    return [ numbers[0], numbers[numbers.length-1] ];
 }
 
 function getDayPeriod( h1:IHourData, h2:IHourData | undefined): IDayPeriod {
@@ -130,14 +115,6 @@ function getDayPeriod( h1:IHourData, h2:IHourData | undefined): IDayPeriod {
         icon2URL: icons[1],
         isDayTime: h1.icon.charAt(2) === "d", // e.g. 04d@2x.png / 04n@2x.png
     }
-
-    /*
-        feelsLike: string,
-        wind: string,
-        rain: string,
-        humidity: string,
-        pressure: string,
-    */
 
     return dayPeriod;
 
@@ -227,4 +204,14 @@ function getParsedHoursData( weatherList: Array<any> ): Array< Array<IHourData> 
         }
         return Math.round(n * 3.6);
     }
+}
+
+function getMinMaxTemperature(dayList:Array<IHourData>): Array<number> {
+    let numbers: Array<number> = new Array<number>();
+    for( let i=0; i<dayList.length; i++ ) {
+        numbers.push( dayList[i].temperature );
+    }
+    numbers.sort();
+
+    return [ numbers[0], numbers[numbers.length-1] ];
 }
