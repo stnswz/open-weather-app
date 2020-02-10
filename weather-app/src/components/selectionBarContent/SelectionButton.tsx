@@ -14,14 +14,14 @@ interface IProps {
     setSelectedIndex?: Function;
 }
 
-const state = (store:any) => ({
+const reduxStore = (store:any) => ({
     selectedIndex: store.weatherState.selectedIndex,
 });
-const operations = (dispatch:any) => ({
+const actions = (dispatch:any) => ({
     setSelectedIndex: (index:number) => { dispatch( setSelectedIndex(index) ) },
 });
 
-@(connect(state, operations) as any)
+@(connect(reduxStore, actions) as any)
 class SelectionButton extends Component<IProps, IState> {
 
     constructor(props:IProps) {
@@ -38,12 +38,25 @@ class SelectionButton extends Component<IProps, IState> {
 
     public render(): ReactElement {
 
-        const buttonClass:string = this.props.index === this.props.selectedIndex ? "selectionButtonSelected" : "selectionButton"
+        const buttonClass:string = this.props.index === this.props.selectedIndex ? "selectionButtonSelected" : "selectionButtonAnimated" 
 
         if( this.props.dayData ) {
-            // We use the temperature and weather icon thats shown for noon/afternoon
-            const noonPeriod:IDayPeriod = this.props.dayData.dayPeriods[2];
-            const iconURL:string = noonPeriod.icon1URL;
+
+            const dayPeriods:Array<IDayPeriod> =  this.props.dayData.dayPeriods;
+            let periodItem:IDayPeriod;
+
+            if( this.props.index === 0 ) {
+                if( dayPeriods.length > 1 ) {
+                    periodItem = dayPeriods[ dayPeriods.length-2 ];
+                }
+                periodItem = dayPeriods[0];
+            }
+            else {
+                // We use the weather icon thats shown for noon/afternoon
+                periodItem = dayPeriods[2];
+            }
+            const iconURL:string = periodItem.icon1URL;
+
             return (
                 <div className={buttonClass} onClick={this.onButtonClick}>
                     <div className="selTop">

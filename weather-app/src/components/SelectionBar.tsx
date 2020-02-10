@@ -31,8 +31,8 @@ class SelectionBar extends Component<IProps, IState> {
 
     private getDefaultButtons():Array<ReactElement> {
         const buttons: Array<ReactElement> = new Array<ReactElement>();
-        for( let i=0; i<4; i++ ) {
-            const button:ReactElement = <SelectionButton dayData={null!} index={i} />
+        for( let i=0; i<5; i++ ) {
+            const button:ReactElement = <SelectionButton key={i} dayData={null!} index={i} />
             buttons.push(button);
         }
         return buttons; 
@@ -47,7 +47,7 @@ class SelectionBar extends Component<IProps, IState> {
             <div id="selectionBar">
                 {
                     numberForecastDays ? 
-                    forecastData.map( (dayData, index) => <SelectionButton dayData={dayData} index={index} /> ) : 
+                    forecastData.map( (dayData, index) => <SelectionButton key={dayData.date+index} dayData={dayData} index={index} /> ) : 
                     this.getDefaultButtons()
                 }
             </div>

@@ -18,9 +18,7 @@ class App extends Component {
                             <SelectionBar/>
                         </div>
 
-                        <div id="contentContainer">
-                            <WeatherContent/>
-                        </div>
+                        <WeatherContent/>
 
                     </div>
                 </div>

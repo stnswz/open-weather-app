@@ -1,13 +1,40 @@
-import React, { Component, ReactElement, Fragment } from "react";
+import React, { Component, ReactElement } from "react";
+import { connect } from 'react-redux';
 import WeatherColumn from "./weatherContent/WeatherColumn";
+import {IDayData} from "./../components/definitions/IDayData";
+import { IDayPeriod } from "./definitions/IDayPeriod";
 
 interface IState {
     /** empty state */
 }
 interface IProps {
-    /** empty props */
+    dataIsLoading?: boolean,
+    forecastData?: Array<IDayData>,
+    selectedIndex?: number,
+    country?: string,
+    city?: string,
+    loadingError?: boolean,
+    errorCode?: string,
+    errorMessage?: string,
+    responseMessage?: string,
 }
 
+const reduxStore = (store:any) => ({
+    dataIsLoading: store.weatherState.dataIsLoading,
+    forecastData: store.weatherState.forecastData,
+    selectedIndex: store.weatherState.selectedIndex,
+    country: store.weatherState.country,
+    city: store.weatherState.city,
+    loadingError: store.weatherState.loadingError,
+    errorCode: store.weatherState.errorCode,
+    errorMessage: store.weatherState.errorMessage,
+    responseMessage: store.weatherState.responseMessage,
+});
+const actions = (dispatch:any) => ({
+    //loadWeatherData: (city:string) => { dispatch( loadWeatherData(city) ) },
+});
+
+@(connect(reduxStore, actions) as any)
 class WeatherContent extends Component<IProps, IState> {
 
     constructor(props:IProps) {
@@ -19,18 +46,54 @@ class WeatherContent extends Component<IProps, IState> {
 
     public render(): ReactElement {
 
+        const forecastData: Array<IDayData> = this.props.forecastData || [];
+        const numberForecastDays:number = forecastData.length;
+
+        if( this.props.dataIsLoading ) {
+            // Show preloader.
+            return( <div></div> );
+        }
+        else if( this.props.loadingError ) {
+            // Show error message.
+            return( 
+                <div id="infoContainer">
+                    <div className="error">
+                        Es ist ein Fehler aufgetreten: <br/>
+                        {this.props.errorCode}: {this.props.errorMessage}
+                    </div>
+                </div> 
+            );
+        }
+        else if( this.props.responseMessage ) {
+            // There is not the expected data in json response.
+            return( 
+                <div id="infoContainer">
+                    {this.props.responseMessage}
+                </div> 
+            );
+        }
+        else if( numberForecastDays === 0 ) {
+            // Nothing to show for now. Lets show an info text.
+            return( 
+                <div id="infoContainer">
+                    Geben Sie oben in der Suche eine Stadt ein, für die Sie aktuelle Wetterinformationen anzeigen möchten.
+                </div> 
+            );
+        }
+
+        const dayData: IDayData = forecastData[ this.props.selectedIndex! ];
+        const date: string = dayData.date + dayData.year;
+        const dayPeriods: Array<IDayPeriod> = dayData ? dayData.dayPeriods : [];
+
         return (
-            <Fragment>
+            <div id="contentContainer">
                 <div className="contentHeader">
-                    Das Wetter für Berlin am Donnerstag, 06.02.2020
+                    Das Wetter für {this.props.city} ({this.props.country}) am {dayData.dayLong}, {date}
                 </div>
                 <div className="contentMain">
-                    <WeatherColumn />
-                    <WeatherColumn />
-                    <WeatherColumn />
-                    <WeatherColumn />
+                    { dayPeriods.map( (dayPeriod, index) =>  <WeatherColumn key={date+index} dayPeriod={dayPeriod}/>) }
                 </div>
-            </Fragment>
+            </div>
         );
     }
 }

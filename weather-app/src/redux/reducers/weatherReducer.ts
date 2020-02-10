@@ -10,6 +10,7 @@ interface IWeatherState {
     loadingError: boolean,
     errorCode: string,
     errorMessage: string,
+    responseMessage: string,
 }
 
 const initialState:IWeatherState = {
@@ -20,13 +21,14 @@ const initialState:IWeatherState = {
     city: "",
     errorCode: "",
     errorMessage: "",
+    responseMessage: "",
     forecastData: new Array<IDayData>(),
 }
 
 const reducer = (state:IWeatherState = initialState, action:any) => {
     switch (action.type) {
         case types.WEATHER_DATA_LOADING:
-            return { ...state, dataIsLoading: true, city: "", country: "", selectedIndex: 0, loadingError: false, errorCode: "" }
+            return { ...initialState, dataIsLoading: true}
         case types.WEATHER_DATA_LOADED:
             return { ...state, 
                     dataIsLoading: false, 
@@ -36,6 +38,7 @@ const reducer = (state:IWeatherState = initialState, action:any) => {
                     forecastData: action.payload.forecastData,
                     city: action.payload.city,
                     country: action.payload.country,
+                    responseMessage: action.payload.responseMessage,
             }
         case types.LOADING_ERROR:
             return { ...state, 

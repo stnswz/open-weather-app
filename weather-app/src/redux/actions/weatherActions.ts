@@ -17,15 +17,32 @@ export function loadWeatherData(city:string) {
             // City nicht gefunden:  {"cod":"404","message":"city not found"}
             // City nicht angegeben: {"cod":"400","message":"Nothing to geocode"}
 
-            const data:any = await RequestApi.getWeatherData( city );
-            const forcastData: Array<IDayData> = getForecastData( data );
+            const data:any    = await RequestApi.getWeatherData( city );
+            const code:string = data.cod as string;
+            let responseMessage:string = "";
+            let forcastData: Array<IDayData> = new Array<IDayData>();
+            let castCity: string = "";
+            let country: string  = "";
+
+            if( code === "200" ) {
+                forcastData = getForecastData( data );
+                castCity = forcastData[0].city;
+                country = forcastData[0].country;
+            }
+            else if( code === "400" || code === "404" ) {
+                responseMessage = "Zur Sucheingabe konnte nichts gefunden werden.";
+            }
+            else {
+                responseMessage = "Code "+data.cod+": " + data.message;
+            }
 
             dispatch({
                 type: types.WEATHER_DATA_LOADED,
                 payload: {
                     forecastData: forcastData,
-                    city: forcastData[0].city,
-                    country: forcastData[0].country,
+                    city: castCity,
+                    country: country,
+                    responseMessage: responseMessage,
                 }
             });
         }
@@ -34,8 +51,8 @@ export function loadWeatherData(city:string) {
             dispatch({
                 type: types.LOADING_ERROR,
                 payload: {
-                    errorCode: e.message,
-                    errorMessage: e.code,
+                    errorCode: e.code,
+                    errorMessage: e.message,
                 }
             });
         }

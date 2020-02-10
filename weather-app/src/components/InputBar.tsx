@@ -28,8 +28,9 @@ class InputBar extends Component<IProps, IState> {
             inputValue: "",
         }
 
-        this.onTextChange = this.onTextChange.bind(this);
+        this.onTextChange  = this.onTextChange.bind(this);
         this.onButtonClick = this.onButtonClick.bind(this);
+        this.onKeyPress    = this.onKeyPress.bind(this);
         this.loadWeatherData = this.loadWeatherData.bind(this);
     }
 
@@ -39,7 +40,7 @@ class InputBar extends Component<IProps, IState> {
 
     private onKeyPress( ev:any ) {
         if( ev.key === "Enter") {
-            //this.loadWeatherData();
+            this.loadWeatherData();
         }
     }
 

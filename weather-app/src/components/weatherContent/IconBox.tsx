@@ -1,12 +1,12 @@
-import React, { Component, ReactElement } from "react";
+import React, { Component, ReactElement, Fragment } from "react";
 import { connect } from 'react-redux';
 
 interface IState {
     /* empty state */
 }
 interface IProps {
-    //loadingError?: boolean;
-    //loadWeatherData?: Function;
+    icon1URL: string,
+    icon2URL: string,
 }
 
 const state = (store:any) => ({
@@ -28,11 +28,18 @@ class IconBox extends Component<IProps, IState> {
 
     public render(): ReactElement {
 
+        const className = this.props.icon2URL ? "iconX2" : "iconBig";
+        let icons: ReactElement = <img className={className} alt="" src={this.props.icon1URL} />;
+        if( this.props.icon2URL ) {
+            icons = <Fragment>
+                        <img className={className} alt="" src={this.props.icon1URL} />
+                        <img className={className} alt="" src={this.props.icon2URL} />
+                    </Fragment>;
+        }
+
         return (
             <div className="iconBox">
-                <img className="iconBig" alt="" src="http://openweathermap.org/img/wn/10d@2x.png" />
-                {/*<img className="iconX2" alt="" src="http://openweathermap.org/img/wn/10d@2x.png" />
-                <img className="iconX2" alt="" src="http://openweathermap.org/img/wn/09d@2x.png" />*/}
+                {icons}
             </div>
         );
     }

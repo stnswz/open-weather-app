@@ -37,13 +37,15 @@ export function getForecastData( data:any ):Array<IDayData> {
     */
 
     let forecastData:Array<IDayData> = new Array<IDayData>();
+    if( !data || data.cod !== "200" ) {
+        return forecastData;
+    }
 
     const parsedHoursData: Array< Array<IHourData> > = getParsedHoursData( data.list );
-    const todayList: Array<IHourData> = parsedHoursData[0];
     const city:string = data.city.name;
     const country:string = data.city.country;
 
-    for( let i=1; i<parsedHoursData.length; i++ ) {
+    for( let i=0; i<parsedHoursData.length; i++ ) {
         // parsedHourData[0] contains all hours for today
         // parsedHourData[1-n] contains all hours for every other forecast days
 
@@ -52,7 +54,16 @@ export function getForecastData( data:any ):Array<IDayData> {
         let date:string = dayList[0].date;
         let year:number = dayList[0].year;
 
-        for( let b=0; b<dayList.length; b+=2 ) {
+        if( i === 0 && dayList.length % 2 === 1) {
+            // Special step for the first data array (= todays data array), it's length 
+            // can be eneven since it doesn't must contain all 8 hours of a day.
+            const hourData: IHourData = dayList.length > 1 ? dayList.shift()! : dayList[0];
+            let dayPeriod:IDayPeriod = getDayPeriod( hourData, undefined );
+            dayPeriods.push( dayPeriod );
+        }
+
+        for( let b=0; b<dayList.length && dayList.length>1; b+=2 ) {
+            // The API has send us 8 hour for one day. We bind 2 hours together to one day period.
             let dayPeriod:IDayPeriod = getDayPeriod(dayList[b], dayList[b+1]);
             dayPeriods.push( dayPeriod );
         }
@@ -61,9 +72,10 @@ export function getForecastData( data:any ):Array<IDayData> {
         const hData:IHourData = dayList[0];
         const day:number = hData.weekDay;
 
-        // Determine the min/max temperature (Todo: we still have to calculate it corrrect)
-        const tempMin: number = dayList[2].temperature; // 6 o'clock in the morning
-        const tempMax: number = dayList[6].temperature; // 3 o'clock afternoon
+        // Determine the min/max temperature 
+        const minMaxTemp:Array<number> = getMinMaxTemperature( dayList );
+        const tempMin: number = minMaxTemp[0]; 
+        const tempMax: number = minMaxTemp[1];
 
         let dayData:IDayData = {
             country: country,
@@ -84,21 +96,31 @@ export function getForecastData( data:any ):Array<IDayData> {
     return forecastData;
 }
 
-function getDayPeriod( h1:IHourData, h2:IHourData): IDayPeriod {
+function getMinMaxTemperature(dayList:Array<IHourData>): Array<number> {
+    let numbers: Array<number> = new Array<number>();
+    for( let i=0; i<dayList.length; i++ ) {
+        numbers.push( dayList[i].temperature );
+    }
+    numbers.sort();
 
-    const temp:Array<number>   = sortAscending(h1.temperature, h2.temperature);
-    const tempF:Array<number>   = sortAscending(h1.feelsLike, h2.feelsLike);
-    const clouds:Array<number> = sortAscending(h1.clouds, h2.clouds);
-    const wind:Array<number> = sortAscending(h1.wind, h2.wind);
-    const rain:Array<number> = sortAscending(h1.rain, h2.rain);
-    const humidity:Array<number> = sortAscending(h1.humidity, h2.humidity);
-    const icons:Array<string>  = getIcons(h1.icon, h2.icon);
+    return [ numbers[0], numbers[numbers.length-1] ];
+}
+
+function getDayPeriod( h1:IHourData, h2:IHourData | undefined): IDayPeriod {
+
+    const temp:Array<number>   = sortAscending(h1.temperature, h2 ? h2.temperature : undefined);
+    const tempF:Array<number>   = sortAscending(h1.feelsLike, h2 ? h2.feelsLike : undefined);
+    const clouds:Array<number> = sortAscending(h1.clouds, h2 ? h2.clouds : undefined);
+    const wind:Array<number> = sortAscending(h1.wind, h2 ? h2.wind : undefined);
+    const rain:Array<number> = sortAscending(h1.rain, h2 ? h2.rain : undefined);
+    const humidity:Array<number> = sortAscending(h1.humidity, h2 ? h2.humidity : undefined);
+    const icons:Array<string>  = getIcons(h1.icon, h2 ? h2.icon : "");
 
     let dayPeriod:IDayPeriod = {
         dayTime: getDayTime( h1.hour ), // Morgens, Mittags, Abends...
         temperature: temp.length === 1 ? temp[0]+" °C" : temp[0]+ " - " + temp[1]+" °C",
-        feelsLike: tempF.length === 1 ? tempF[0]+" °C" : tempF[0]+ " - " + tempF[1]+" °C",
-        description: getDescription( h1.description, h2.description ),
+        feelsLike: tempF.length === 1 ? tempF[0]+" °C" : tempF[0]+ " bis " + tempF[1]+" °C",
+        description: getDescription( h1.description, h2 ? h2.description : "" ),
         clouds: clouds.length === 1 ? clouds[0]+" %" : clouds[0]+ " - " + clouds[1]+" %",
         wind: wind.length === 1 ? wind[0]+" Km/h" : wind[0]+ " - " + wind[1]+" Km/h",
         rain: rain.length === 1 ? rain[0]+" mm" : rain[0]+ " - " + rain[1]+" mm",
@@ -133,19 +155,19 @@ function getDayPeriod( h1:IHourData, h2:IHourData): IDayPeriod {
         }
     }
 
-    function sortAscending( v1:number, v2:number ): Array<number> {
-        if( v1 === v2 ) {
+    function sortAscending( v1:number, v2:number | undefined ): Array<number> {
+        if( v1 === v2 || v2 === undefined ) {
             return [v1];
         }
         else return v1 < v2 ? [v1, v2] : [v2, v1];
     }
 
     function getDescription( descr1:string, descr2:string ):string {
-        return descr1 === descr2 ? descr1 : descr1 + " / " + descr2;
+        return descr1 === descr2 || !descr2 ? descr1 : descr1 + " / " + descr2;
     }
 
     function getIcons( icon1:string, icon2:string ): Array<string> {
-        return icon1 === icon2 ? [AppConfig.ICON_URL + icon1 + ".png", ""] : [AppConfig.ICON_URL+icon1+".png", AppConfig.ICON_URL+icon2+".png"];
+        return icon1 === icon2 || !icon2 ? [AppConfig.ICON_URL + icon1 + ".png", ""] : [AppConfig.ICON_URL+icon1+".png", AppConfig.ICON_URL+icon2+".png"];
     }
 }
 
@@ -182,7 +204,7 @@ function getParsedHoursData( weatherList: Array<any> ): Array< Array<IHourData> 
             description:  listItem.weather[0].description,
             clouds: listItem.clouds.all,
             wind: getWindSpeed( listItem.wind.speed ),
-            rain: listItem.rain ? listItem.rain["3d"] : 0,
+            rain: listItem.rain ? listItem.rain["3h"] : 0,
             humidity: listItem.main.humidity,
             pressure: listItem.main.pressure,
             icon: listItem.weather[0].icon
