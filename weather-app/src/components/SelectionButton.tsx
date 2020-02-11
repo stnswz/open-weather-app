@@ -44,8 +44,6 @@ class SelectionButton extends Component<IProps, IState> {
 
     public render(): ReactElement {
 
-        console.log("Render SelectionButton " + this.props.index + ", hasMounted: " + this.state.hasMounted );
-
         let buttonClass:string = this.props.index === this.props.selectedIndex ? "selectionButtonSelected" : "selectionButton" 
         if( !this.state.hasMounted && this.props.index !== this.props.selectedIndex ) {
             buttonClass = "selectionButtonAnimated";
