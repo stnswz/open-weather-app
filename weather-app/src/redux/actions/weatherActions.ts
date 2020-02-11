@@ -69,3 +69,11 @@ export function setSelectedIndex(index:number) {
         });
     };
 }
+
+export function startPreloading() {
+    return async (dispatch:any, getState:any) => {
+        dispatch({
+            type: types.PRELOADING_START,
+        });
+    };
+}

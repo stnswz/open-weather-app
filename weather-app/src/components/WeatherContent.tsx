@@ -3,12 +3,14 @@ import { connect } from 'react-redux';
 import WeatherColumn from "./weatherContent/WeatherColumn";
 import {IDayData} from "./../components/definitions/IDayData";
 import { IDayPeriod } from "./definitions/IDayPeriod";
+import './../css/preloader.css';
 
 interface IState {
     /** empty */
 }
 interface IProps {
     dataIsLoading?: boolean,
+    preloadingStart?: boolean,
     forecastData?: Array<IDayData>,
     selectedIndex?: number,
     country?: string,
@@ -21,6 +23,7 @@ interface IProps {
 
 const reduxStore = (store:any) => ({
     dataIsLoading: store.weatherState.dataIsLoading,
+    preloadingStart: store.weatherState.preloadingStart,
     forecastData: store.weatherState.forecastData,
     selectedIndex: store.weatherState.selectedIndex,
     country: store.weatherState.country,
@@ -47,9 +50,18 @@ class WeatherContent extends Component<IProps, IState> {
         const forecastData: Array<IDayData> = this.props.forecastData || [];
         const numberForecastDays:number = forecastData.length;
 
-        if( this.props.dataIsLoading ) {
+        if( this.props.dataIsLoading || this.props.preloadingStart ) {
             // Show preloader.
-            return( <div></div> );
+            return( <div id="preloaderContainer">
+                        <div className="preloader">
+                            <div></div><div></div>
+                            <div></div><div></div>
+                            <div></div><div></div>
+                            <div></div><div></div>
+                            <div></div><div></div>
+                            <div></div><div></div>
+                        </div>
+                    </div> );
         }
         else if( this.props.loadingError ) {
             // Show error message.

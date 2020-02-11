@@ -1,6 +1,6 @@
 import React, { Component, ReactElement } from "react";
 import { connect } from 'react-redux';
-import SelectionButton from "./selectionBarContent/SelectionButton";
+import SelectionButton from "./SelectionButton";
 import {IDayData} from "./../components/definitions/IDayData";
 
 interface IState {

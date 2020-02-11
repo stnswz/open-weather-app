@@ -3,6 +3,7 @@ import {IDayData} from "../../components/definitions/IDayData";
 
 interface IWeatherState {
     dataIsLoading: boolean,
+    preloadingStart: boolean,
     forecastData: Array<IDayData>,
     country: string,
     city: string,
@@ -15,6 +16,7 @@ interface IWeatherState {
 
 const initialState:IWeatherState = {
     dataIsLoading: false,
+    preloadingStart: false,
     loadingError: false,
     selectedIndex: 0,
     country: "",
@@ -28,7 +30,9 @@ const initialState:IWeatherState = {
 const reducer = (state:IWeatherState = initialState, action:any) => {
     switch (action.type) {
         case types.WEATHER_DATA_LOADING:
-            return { ...initialState, dataIsLoading: true}
+            return { ...initialState, dataIsLoading: true, preloadingStart: false}
+        case types.PRELOADING_START:
+            return { ...initialState, preloadingStart: true, dataIsLoading: false}
         case types.WEATHER_DATA_LOADED:
             return { ...state, 
                     dataIsLoading: false, 

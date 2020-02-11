@@ -1,6 +1,6 @@
 import React, { Component, ReactElement } from "react";
 import { connect } from 'react-redux';
-import { loadWeatherData } from "../redux/actions/weatherActions";
+import { loadWeatherData, startPreloading } from "../redux/actions/weatherActions";
 
 interface IState {
     inputValue:string;
@@ -9,6 +9,7 @@ interface IProps {
     weatherLoading?: boolean,
     loadingError?: boolean;
     loadWeatherData?: Function;
+    startPreloading?: Function;
 }
 
 const reduxStore = (store:any) => ({
@@ -16,6 +17,7 @@ const reduxStore = (store:any) => ({
     loadingError: store.weatherState.loadingError,
 });
 const actions = (dispatch:any) => ({
+    startPreloading: () => { dispatch( startPreloading() ) },
     loadWeatherData: (city:string) => { dispatch( loadWeatherData(city) ) },
 });
 

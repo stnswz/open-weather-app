@@ -1,11 +1,11 @@
 import React, { Component, ReactElement } from "react";
 import { connect } from 'react-redux';
-import { IDayData } from "./../definitions/IDayData";
-import { IDayPeriod } from "../definitions/IDayPeriod";
-import { setSelectedIndex } from "./../../redux/actions/weatherActions";
+import { IDayData } from "./definitions/IDayData";
+import { IDayPeriod } from "./definitions/IDayPeriod";
+import { setSelectedIndex } from "../redux/actions/weatherActions";
 
 interface IState {
-    /* empty */
+    hasMounted:boolean,
 }
 interface IProps {
     dayData?:IDayData,
@@ -26,8 +26,14 @@ class SelectionButton extends Component<IProps, IState> {
 
     constructor(props:IProps) {
         super(props);
-        this.state = {}
+        this.state = {
+            hasMounted: false,
+        }
         this.onButtonClick = this.onButtonClick.bind(this);
+    }
+
+    public componentDidMount() {
+        setTimeout( () => this.setState({hasMounted: true}), 250 );
     }
 
     private onButtonClick( ev:any ) {
@@ -38,21 +44,28 @@ class SelectionButton extends Component<IProps, IState> {
 
     public render(): ReactElement {
 
-        const buttonClass:string = this.props.index === this.props.selectedIndex ? "selectionButtonSelected" : "selectionButtonAnimated" 
+        console.log("Render SelectionButton " + this.props.index + ", hasMounted: " + this.state.hasMounted );
+
+        let buttonClass:string = this.props.index === this.props.selectedIndex ? "selectionButtonSelected" : "selectionButton" 
+        if( !this.state.hasMounted && this.props.index !== this.props.selectedIndex ) {
+            buttonClass = "selectionButtonAnimated";
+        }
 
         if( this.props.dayData ) {
 
             const dayPeriods:Array<IDayPeriod> =  this.props.dayData.dayPeriods;
             let periodItem:IDayPeriod;
 
+            // Determine the weather icon thats shown in the SelectionButton. 
+            // Ideally we use the icon for noon/afternoon
             if( this.props.index === 0 ) {
                 if( dayPeriods.length > 1 ) {
                     periodItem = dayPeriods[ dayPeriods.length-2 ];
                 }
-                periodItem = dayPeriods[0];
+                else periodItem = dayPeriods[0];
             }
             else {
-                // We use the weather icon thats shown for noon/afternoon
+                // We use the weather icon shown for noon/afternoon
                 periodItem = dayPeriods[2];
             }
             const iconURL:string = periodItem.icon1URL;
