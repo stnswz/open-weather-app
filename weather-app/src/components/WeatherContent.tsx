@@ -76,7 +76,8 @@ class WeatherContent extends Component<IProps, IState> {
             // Nothing to show for now. Lets show an info text.
             return( 
                 <div id="infoContainer">
-                    Geben Sie oben in der Suche eine Stadt ein, für die Sie aktuelle Wetterinformationen anzeigen möchten.
+                    Beispielanwendung zur Wettervorhersage auf Basis einer frei verfügbaren API von openweathermap.com. 
+                    Für die Anzeige von Wetterinformationen einfach im Suchfeld oben einen Ort bzw. Stadtnamen eingeben.
                 </div> 
             );
         }
