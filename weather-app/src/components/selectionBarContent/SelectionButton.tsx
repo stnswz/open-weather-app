@@ -5,7 +5,7 @@ import { IDayPeriod } from "../definitions/IDayPeriod";
 import { setSelectedIndex } from "./../../redux/actions/weatherActions";
 
 interface IState {
-    /* empty state */
+    /* empty */
 }
 interface IProps {
     dayData?:IDayData,
@@ -30,7 +30,7 @@ class SelectionButton extends Component<IProps, IState> {
         this.onButtonClick = this.onButtonClick.bind(this);
     }
 
-    onButtonClick( ev:any ) {
+    private onButtonClick( ev:any ) {
         if(this.props.setSelectedIndex) {
             this.props.setSelectedIndex( this.props.index );
         }

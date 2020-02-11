@@ -2,24 +2,22 @@ import React, { Component, ReactElement } from "react";
 import { connect } from 'react-redux';
 import SelectionButton from "./selectionBarContent/SelectionButton";
 import {IDayData} from "./../components/definitions/IDayData";
-//import { loadWeatherData } from "../redux/actions/weatherActions";
 
 interface IState {
-    /* empty state */
+    /* empty */
 }
 interface IProps {
     forecastData?: Array<IDayData>,
-    //loadWeatherData?: Function;
 }
 
-const state = (store:any) => ({
+const reduxStore = (store:any) => ({
     forecastData: store.weatherState.forecastData,
 });
-const operations = (dispatch:any) => ({
-    //loadWeatherData: (city:string) => { dispatch( loadWeatherData(city) ) },
+const actions = (dispatch:any) => ({
+
 });
 
-@(connect(state, operations) as any)
+@(connect(reduxStore, actions) as any)
 class SelectionBar extends Component<IProps, IState> {
 
     constructor(props:IProps) {

@@ -5,7 +5,7 @@ import {IDayData} from "./../components/definitions/IDayData";
 import { IDayPeriod } from "./definitions/IDayPeriod";
 
 interface IState {
-    /** empty state */
+    /** empty */
 }
 interface IProps {
     dataIsLoading?: boolean,
@@ -31,7 +31,7 @@ const reduxStore = (store:any) => ({
     responseMessage: store.weatherState.responseMessage,
 });
 const actions = (dispatch:any) => ({
-    //loadWeatherData: (city:string) => { dispatch( loadWeatherData(city) ) },
+    
 });
 
 @(connect(reduxStore, actions) as any)
@@ -39,9 +39,7 @@ class WeatherContent extends Component<IProps, IState> {
 
     constructor(props:IProps) {
         super(props);
-        this.state = {
-            
-        }
+        this.state = {}
     }
 
     public render(): ReactElement {

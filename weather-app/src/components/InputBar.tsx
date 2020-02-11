@@ -11,15 +11,15 @@ interface IProps {
     loadWeatherData?: Function;
 }
 
-const state = (store:any) => ({
+const reduxStore = (store:any) => ({
     weatherLoading: store.weatherState.weatherLoading,
     loadingError: store.weatherState.loadingError,
 });
-const operations = (dispatch:any) => ({
+const actions = (dispatch:any) => ({
     loadWeatherData: (city:string) => { dispatch( loadWeatherData(city) ) },
 });
 
-@(connect(state, operations) as any)
+@(connect(reduxStore, actions) as any)
 class InputBar extends Component<IProps, IState> {
 
     constructor(props:IProps) {
