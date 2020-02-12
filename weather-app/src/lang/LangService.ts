@@ -1,4 +1,4 @@
-export class LangProvider {
+export class LangService {
 
     private static store: any;
 

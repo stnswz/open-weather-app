@@ -3,10 +3,10 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import store from './redux/store';
 import './css/index.css';
-import {LangProvider} from './lang/LangProvider';
+import {LangService} from './lang/LangService';
 import App from './App';
 
-LangProvider.setStore(store);
+LangService.setStore(store);
 ReactDOM.render(
     <Provider store={store}>
         <App />
