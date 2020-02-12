@@ -18,6 +18,7 @@ export function loadWeatherData(city:string) {
             // City no city was given: {"cod":"400","message":"Nothing to geocode"}
 
             const language:string = LangService.getLang();
+            const langObj:any     = LangService.getLangObject();
             const data:any    = await RequestApi.getWeatherData( city, language.toLowerCase() );
             const code:string = data.cod as string;
             let responseMessage:string = "";
@@ -31,7 +32,7 @@ export function loadWeatherData(city:string) {
                 country = forecastData[0].country;
             }
             else if( code === "400" || code === "404" ) {
-                responseMessage = "Zur Sucheingabe konnte nichts gefunden werden.";
+                responseMessage = langObj.NOTHING_FOUND;
             }
             else {
                 responseMessage = "Code "+data.cod+": " + data.message;
