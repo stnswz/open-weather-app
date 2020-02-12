@@ -22,7 +22,7 @@ interface IHourData {
 }
 
 const iconMap:any = {
-    "01d" : "d_4",
+    "01d" : "d_0",
     "02d" : "d_1",
     "03d" : "d_2",
     "04d" : "d_3",
@@ -31,7 +31,7 @@ const iconMap:any = {
     "11d" : "d_9",
     "13d" : "d_7",
     "50d" : "mist",
-    "01n" : "n_4",
+    "01n" : "n_0",
     "02n" : "n_1",
     "03n" : "n_2",
     "04n" : "n_3",
