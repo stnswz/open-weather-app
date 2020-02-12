@@ -19,8 +19,8 @@ export class RequestApi {
         }
         else if( response.status === 400 || response.status === 404 ) {
             const data = await response.json();
-            if( data && (data.cod === "404" && data.message.toLowerCase() === "city not found") ||
-                (data.cod === "400" && data.message.toLowerCase() === "nothing to geocode") ) {
+            if( data && ((data.cod === "404" && data.message.toLowerCase() === "city not found") ||
+                (data.cod === "400" && data.message.toLowerCase() === "nothing to geocode")) ) {
                 return data;
             }
             else if( data && data.cod ) {
