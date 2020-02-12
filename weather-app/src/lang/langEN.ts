@@ -1,6 +1,6 @@
 export const langEN:Object = {
     INPUT_SEARCHTEXT: "search for city...",
-    INFOTEXT: "Beispielanwendung zur Wettervorhersage auf Basis einer frei verfügbaren API von openweathermap.com. Für die Anzeige von Wetterinformationen einfach im Suchfeld oben einen Ort bzw. Stadtnamen eingeben.",
+    INFOTEXT: "Example application for weather forecast based on a free API from openweathermap.com. For viewing weather information, just type a city in the searchbox at the top.",
     NIGHT: "Night",
     MORNING: "Morning",
     NOON: "Noon",

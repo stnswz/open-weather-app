@@ -20,6 +20,7 @@ interface IProps {
     errorCode?: string,
     errorMessage?: string,
     responseMessage?: string,
+    language?: string,
 }
 
 const reduxStore = (store:any) => ({
@@ -33,6 +34,7 @@ const reduxStore = (store:any) => ({
     errorCode: store.weatherState.errorCode,
     errorMessage: store.weatherState.errorMessage,
     responseMessage: store.weatherState.responseMessage,
+    language: store.appState.language,
 });
 const actions = (dispatch:any) => ({
     
