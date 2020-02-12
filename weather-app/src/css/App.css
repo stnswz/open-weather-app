@@ -3,7 +3,7 @@ div {
 }
 
 #mainContent {
-    width: 100vw; /*vw: viewport width / vh: viewport height*/
+    width: 100vw;
     height: 100vh;
     display:flex;
     justify-content:center;
@@ -35,13 +35,20 @@ div {
 }
 
 #inputBar {
-    padding: 15px;
+    position: relative;
+    padding: 1em;
     display:flex;
     justify-content:center;
     align-items: flex-start;
     border-top: 0px solid #222;
     border-bottom: 0px solid #333;
     background-color: #3769b6;
+
+    background-image: url(./images/OW-API-Logo.png);
+    background-repeat: no-repeat;
+    background-size: 136px 55px;
+    background-position-x: 10px;
+    background-position-y: center;
 
     -webkit-box-shadow: 0px 5px 10px -3px rgba(34,34,34,0.6);
     -moz-box-shadow: 0px 5px 10px -3px rgba(34,34,34,0.6);
@@ -76,6 +83,34 @@ div {
 }
 #button:hover {
     background-color: #eee;
+}
+#langBox {
+    position: absolute;
+    width:100px;
+    right: 0px;
+    bottom: -1.75em;
+    display:flex;
+    justify-content:flex-start;
+    align-items: flex-start;
+    background: linear-gradient(to bottom,  #3769b6 0%,#4479c8 42%,#2d5ba9 100%);
+    box-shadow: 0px 5px 10px -3px rgba(34,34,34,0.6);
+}
+#langBox .lang, #langBox .langSelected {
+    width:50px;
+    text-align: center;
+    padding-top: 0.2em;
+    font-size: 1em;
+    font-weight: 600;
+    color: #fff;
+    cursor: pointer;
+}
+#langBox .langSelected, #langBox .lang:hover {
+    width:49px;
+    margin: 2px 1px;
+    margin-left: 0px;
+    padding-top: 2px;
+    background: #fff;
+    color: #2d5ba9;
 }
 
 #selectionBar {
@@ -138,33 +173,7 @@ div {
     color: #cc0000;
     font-size: 1em;
 }
-.logoBox {
-    display: inline-block;
-    width: 300px;
-    text-align: center;
-    padding-top: 0.5em;
-    padding-bottom: 0.25em;
-    margin-top: 2em;
-    margin-bottom: 0;
-    /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#ffffff+0,76acea+1,76acea+99,ffffff+100 */
-    background: #ffffff; /* Old browsers */
-    background: -moz-linear-gradient(left,  #ffffff 0%, #76acea 1%, #76acea 99%, #ffffff 100%); /* FF3.6-15 */
-    background: -webkit-linear-gradient(left,  #ffffff 0%,#76acea 1%,#76acea 99%,#ffffff 100%); /* Chrome10-25,Safari5.1-6 */
-    background: linear-gradient(to right,  #ffffff 0%,#76acea 1%,#76acea 99%,#ffffff 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ffffff',GradientType=1 ); /* IE6-9 */
-    animation-name: opacityAnimation;
-    animation-duration: 2s;
-}
-.weatherLogo {
-    display: inline-block;
-    width: 120px;
-    height: 50px;
-    background-image: url(./images/OWLogo.png);
-    background-repeat: no-repeat;
-    background-size: 120px 50px;
-    background-position-x: 0;
-    background-position-y: 0;
-}
+
 #preloaderContainer {
     margin-top: 6em;
     border: 0px;

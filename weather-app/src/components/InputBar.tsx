@@ -30,9 +30,10 @@ class InputBar extends Component<IProps, IState> {
             inputValue: "",
         }
 
-        this.onTextChange  = this.onTextChange.bind(this);
-        this.onButtonClick = this.onButtonClick.bind(this);
-        this.onKeyPress    = this.onKeyPress.bind(this);
+        this.onTextChange = this.onTextChange.bind(this);
+        this.onSearchButtonClick = this.onSearchButtonClick.bind(this);
+        this.onLangButtonClick = this.onLangButtonClick.bind(this);
+        this.onKeyPress = this.onKeyPress.bind(this);
         this.loadWeatherData = this.loadWeatherData.bind(this);
     }
 
@@ -46,8 +47,17 @@ class InputBar extends Component<IProps, IState> {
         }
     }
 
-    private onButtonClick( ev:any ) {
+    private onSearchButtonClick( ev:any ) {
         this.loadWeatherData();
+    }
+
+    private onLangButtonClick( ev:any ) {
+        if( ev.target.id === "de") {
+
+        }
+        else if( ev.target.id === "en") {
+
+        }
     }
 
     private loadWeatherData() {
@@ -61,7 +71,13 @@ class InputBar extends Component<IProps, IState> {
         return (
             <div id="inputBar">
                 <input id="textInput" onKeyPress={this.onKeyPress} onChange={this.onTextChange} type="text" value={this.state.inputValue} placeholder="Suche nach Ort..."/> 
-                <div id="button" onClick={this.onButtonClick}></div>
+                <div id="button" onClick={this.onSearchButtonClick}></div>
+                {/*
+                <div id="langBox">
+                    <div id="de" onClick={this.onLangButtonClick} className="langSelected">DE</div>
+                    <div id="en" onClick={this.onLangButtonClick} className="lang">EN</div>
+                </div> 
+                */}
             </div>
         );
     }
