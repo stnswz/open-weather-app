@@ -2,6 +2,7 @@ import types from './types';
 import {RequestApi} from "../../requestApi/requestApi";
 import {IDayData} from "../../components/definitions/IDayData";
 import {getForecastData} from "../../utils/parseFunctions";
+import {LangService} from "./../../lang/LangService";
 
 export function loadWeatherData(city:string) {
 
@@ -16,17 +17,18 @@ export function loadWeatherData(city:string) {
             // City not found:  {"cod":"404","message":"city not found"}
             // City no city was given: {"cod":"400","message":"Nothing to geocode"}
 
-            const data:any    = await RequestApi.getWeatherData( city );
+            const language:string = LangService.getLang();
+            const data:any    = await RequestApi.getWeatherData( city, language.toLowerCase() );
             const code:string = data.cod as string;
             let responseMessage:string = "";
-            let forcastData: Array<IDayData> = new Array<IDayData>();
-            let castCity: string = "";
+            let forecastData: Array<IDayData> = new Array<IDayData>();
+            let forecastCity: string = "";
             let country: string  = "";
 
             if( code === "200" ) {
-                forcastData = getForecastData( data );
-                castCity = forcastData[0].city;
-                country = forcastData[0].country;
+                forecastData = getForecastData( data );
+                forecastCity = forecastData[0].city;
+                country = forecastData[0].country;
             }
             else if( code === "400" || code === "404" ) {
                 responseMessage = "Zur Sucheingabe konnte nichts gefunden werden.";
@@ -38,8 +40,9 @@ export function loadWeatherData(city:string) {
             dispatch({
                 type: types.WEATHER_DATA_LOADED,
                 payload: {
-                    forecastData: forcastData,
-                    city: castCity,
+                    forecastData: forecastData,
+                    forecastCity: forecastCity,
+                    searchedCity: city,
                     country: country,
                     responseMessage: responseMessage,
                 }

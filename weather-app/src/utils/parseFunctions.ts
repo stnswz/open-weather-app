@@ -1,6 +1,9 @@
 import {IDayData} from "../components/definitions/IDayData";
 import {IDayPeriod} from "./../components/definitions/IDayPeriod";
 import {AppConfig} from "./../config/AppConfig";
+import {LangService} from "./../lang/LangService";
+import {lang} from "./../constants/lang"
+import {dayMapDE, dayMapEN} from "./../lang/dayMap";
 
 interface IHourData {
     date: string,
@@ -16,16 +19,6 @@ interface IHourData {
     humidity: number,
     pressure: number,
     icon: string,
-}
-
-const dayMap:any = {
-    "0" : ["So", "Sonntag"],
-    "1" : ["Mo", "Montag"],
-    "2" : ["Di", "Dienstag"],
-    "3" : ["Mi", "Mittwoch"],
-    "4" : ["Do", "Donnerstag"],
-    "5" : ["Fr", "Freitag"],
-    "6" : ["Sa", "Samstag"],
 }
 
 export function getForecastData( data:any ):Array<IDayData> {
@@ -71,6 +64,8 @@ export function getForecastData( data:any ):Array<IDayData> {
         const minMaxTemp:Array<number> = getMinMaxTemperature( dayList );
         const tempMin: number = minMaxTemp[0]; 
         const tempMax: number = minMaxTemp[1];
+
+        const dayMap:any = getDayMap();
 
         let dayData:IDayData = {
             country: country,
@@ -119,15 +114,16 @@ function getDayPeriod( h1:IHourData, h2:IHourData | undefined): IDayPeriod {
     return dayPeriod;
 
     function getDayTime( h:number ): string {
+        const langObj: any = LangService.getLangObject();
         switch( h ) {
             case 0: 
-            case 3: return "Nachts";
+            case 3: return langObj.NIGHT;
             case 6: 
-            case 9: return "Morgens";
+            case 9: return langObj.MORNING;
             case 12: 
-            case 15: return "Mittags";
+            case 15: return langObj.NOON;
             case 18: 
-            case 21: return "Abends";
+            case 21: return langObj.EVENING;
             default: return "";
         }
     }
@@ -204,6 +200,11 @@ function getParsedHoursData( weatherList: Array<any> ): Array< Array<IHourData> 
         }
         return Math.round(n * 3.6);
     }
+}
+
+function getDayMap():any {
+    const selectedLang: string = LangService.getLang();
+    return selectedLang === lang.DE ? dayMapDE : dayMapEN;
 }
 
 function getMinMaxTemperature(dayList:Array<IHourData>): Array<number> {

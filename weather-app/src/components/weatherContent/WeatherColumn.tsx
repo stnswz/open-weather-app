@@ -1,6 +1,7 @@
 import React, { ReactElement } from "react";
 import IconBox from "./IconBox";
 import { IDayPeriod } from "../definitions/IDayPeriod";
+import {LangService} from "./../../lang/LangService";
 
 interface IProps {
     dayPeriod: IDayPeriod;
@@ -18,6 +19,7 @@ function WeatherColumn(props:IProps): ReactElement {
     }
 
     const dp: IDayPeriod = props.dayPeriod;
+    const langObj:any = LangService.getLangObject();
 
     return (
         <div className="column">
@@ -28,12 +30,12 @@ function WeatherColumn(props:IProps): ReactElement {
                 <div className="desc">{dp.description}</div>
             </div>
             <div className="colBottom">
-                <div className="clouds" title={"Wolken: " + dp.clouds}>{dp.clouds}</div>
-                <div className="wind" title={"Wind um " + dp.wind}>{dp.wind}</div>
-                <div className="feels" title={"Temperatur gefühlt wie " + dp.feelsLike}>{dp.feelsLike}</div>
-                <div className="rain" title={"Niederschlagsmenge " + dp.rain}>{dp.rain}</div>
-                <div className="humidity" title={"Luftfeuchtigkeit " + dp.humidity}>{dp.humidity}</div>
-                <div className="pressure">Luftdruck {dp.pressure}</div>
+                <div className="clouds" title={langObj.CLOUDS_TTP + ": " + dp.clouds}>{dp.clouds}</div>
+                <div className="wind" title={langObj.WIND_TTP + " " + dp.wind}>{dp.wind}</div>
+                <div className="feels" title={langObj.FEELS_LIKE_TTP + " " + dp.feelsLike}>{dp.feelsLike}</div>
+                <div className="rain" title={langObj.RAIN_TTP + " " + dp.rain}>{dp.rain}</div>
+                <div className="humidity" title={langObj.HUMIDITY_TTP + " " + dp.humidity}>{dp.humidity}</div>
+                <div className="pressure">{langObj.PRESSURE} {dp.pressure}</div>
             </div> 
         </div>
     );

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import WeatherColumn from "./weatherContent/WeatherColumn";
 import {IDayData} from "./../components/definitions/IDayData";
 import { IDayPeriod } from "./definitions/IDayPeriod";
+import {LangService} from "./../lang/LangService";
 import './../css/preloader.css';
 
 interface IState {
@@ -14,7 +15,7 @@ interface IProps {
     forecastData?: Array<IDayData>,
     selectedIndex?: number,
     country?: string,
-    city?: string,
+    forecastCity?: string,
     loadingError?: boolean,
     errorCode?: string,
     errorMessage?: string,
@@ -27,7 +28,7 @@ const reduxStore = (store:any) => ({
     forecastData: store.weatherState.forecastData,
     selectedIndex: store.weatherState.selectedIndex,
     country: store.weatherState.country,
-    city: store.weatherState.city,
+    forecastCity: store.weatherState.forecastCity,
     loadingError: store.weatherState.loadingError,
     errorCode: store.weatherState.errorCode,
     errorMessage: store.weatherState.errorMessage,
@@ -49,6 +50,7 @@ class WeatherContent extends Component<IProps, IState> {
 
         const forecastData: Array<IDayData> = this.props.forecastData || [];
         const numberForecastDays:number = forecastData.length;
+        const langObj:any = LangService.getLangObject();
 
         if( this.props.dataIsLoading || this.props.preloadingStart ) {
             // Show preloader.
@@ -68,7 +70,7 @@ class WeatherContent extends Component<IProps, IState> {
             return( 
                 <div id="infoContainer">
                     <div className="error">
-                        Es ist ein Fehler aufgetreten: <br/>
+                        {langObj.ERROR}: <br/>
                         {this.props.errorCode}: {this.props.errorMessage}
                     </div>
                 </div> 
@@ -86,8 +88,7 @@ class WeatherContent extends Component<IProps, IState> {
             // Nothing to show for now. Lets show an info text.
             return( 
                 <div id="infoContainer">
-                    Beispielanwendung zur Wettervorhersage auf Basis einer frei verfügbaren API von openweathermap.com. 
-                    Für die Anzeige von Wetterinformationen einfach im Suchfeld oben einen Ort bzw. Stadtnamen eingeben.
+                    {langObj.INFOTEXT}
                 </div> 
             );
         }
@@ -99,7 +100,7 @@ class WeatherContent extends Component<IProps, IState> {
         return (
             <div id="contentContainer">
                 <div className="contentHeader">
-                    Das Wetter für {this.props.city} ({this.props.country}) am {dayData.dayLong}, {date}
+                    {langObj.WEATHER_FOR} {this.props.forecastCity} ({this.props.country}) {langObj.AT} {dayData.dayLong}, {date}
                 </div>
                 <div className="contentMain">
                     { dayPeriods.map( (dayPeriod, index) =>  <WeatherColumn key={date+index} dayPeriod={dayPeriod}/>) }

@@ -3,7 +3,8 @@ import {AppConfig} from "./../config/AppConfig"
 export class RequestApi {
 
     public static getWeatherData( city:string, lang:string = "de" ) {
-        const url: string = AppConfig.HOST + "?q="+city+"&units=metric&lang="+lang+"&APPID="+AppConfig.API_KEY;
+        const units:string = "metric"; //lang === "de" ? "metric" : "imperial";
+        const url: string = AppConfig.HOST + "?q="+city+"&units="+units+"&lang="+lang+"&APPID="+AppConfig.API_KEY;
         return this.request( url, 'GET' );
     }
 

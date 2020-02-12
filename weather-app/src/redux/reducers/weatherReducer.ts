@@ -6,7 +6,8 @@ interface IWeatherState {
     preloadingStart: boolean,
     forecastData: Array<IDayData>,
     country: string,
-    city: string,
+    forecastCity: string,
+    searchedCity: string,
     selectedIndex:number,
     loadingError: boolean,
     errorCode: string,
@@ -20,7 +21,8 @@ const initialState:IWeatherState = {
     loadingError: false,
     selectedIndex: 0,
     country: "",
-    city: "",
+    forecastCity: "",
+    searchedCity: "",
     errorCode: "",
     errorMessage: "",
     responseMessage: "",
@@ -33,20 +35,20 @@ const reducer = (state:IWeatherState = initialState, action:any) => {
             return { ...initialState, dataIsLoading: true, preloadingStart: false}
         case types.PRELOADING_START:
             return { ...initialState, preloadingStart: true, dataIsLoading: false}
-        case types.WEATHER_DATA_LOADED:
+        case types.WEATHER_DATA_LOADED: 
             return { ...state, 
                     dataIsLoading: false, 
                     loadingError: false, 
                     errorCode: "",
                     selectedIndex: 0,
                     forecastData: action.payload.forecastData,
-                    city: action.payload.city,
+                    forecastCity: action.payload.forecastCity,
+                    searchedCity: action.payload.searchedCity,
                     country: action.payload.country,
                     responseMessage: action.payload.responseMessage,
             }
         case types.LOADING_ERROR:
-            return { ...state, 
-                    dataIsLoading: false, 
+            return { ...initialState, 
                     loadingError: true, 
                     errorCode: action.payload.errorCode, 
                     errorMessage: action.payload.errorMessage,

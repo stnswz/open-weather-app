@@ -2,6 +2,7 @@ import React, { Component, ReactElement } from "react";
 import { connect } from 'react-redux';
 import { loadWeatherData, startPreloading } from "./../redux/actions/weatherActions";
 import { setLanguage } from "./../redux/actions/appActions";
+import {LangService} from "./../lang/LangService";
 import {lang} from "./../constants/lang";
 
 interface IState {
@@ -58,7 +59,6 @@ class InputBar extends Component<IProps, IState> {
     }
 
     private onLangButtonClick( ev:any ) {
-        console.log("current lang: " + this.props.language);
         let selectedLang:string = "";
         if( ev.target.id === "de") {
             selectedLang = lang.DE;
@@ -67,7 +67,6 @@ class InputBar extends Component<IProps, IState> {
             selectedLang = lang.EN;
         }
         if( selectedLang !== this.props.language && this.props.setLanguage && !this.props.dataIsLoading ) {
-            console.log("SET lang to " + selectedLang);
             this.props.setLanguage(selectedLang);
         }
     }
@@ -82,10 +81,17 @@ class InputBar extends Component<IProps, IState> {
         
         const classNameDE:string = this.props.language === lang.DE ? "langSelected" : "lang";
         const classNameEN:string = this.props.language === lang.EN ? "langSelected" : "lang";
+        const langObj:any = LangService.getLangObject();
 
         return (
             <div id="inputBar">
-                <input id="textInput" onKeyPress={this.onKeyPress} onChange={this.onTextChange} type="text" value={this.state.inputValue} placeholder="Suche nach Ort..."/> 
+                <input id="textInput" 
+                       onKeyPress={this.onKeyPress} 
+                       onChange={this.onTextChange} 
+                       type="text" 
+                       value={this.state.inputValue} 
+                       placeholder={langObj.INPUT_SEARCHTEXT}
+                /> 
                 <div id="button" onClick={this.onSearchButtonClick}></div>
                 <div id="langBox">
                     <div id="de" onClick={this.onLangButtonClick} className={classNameDE}>DE</div>
