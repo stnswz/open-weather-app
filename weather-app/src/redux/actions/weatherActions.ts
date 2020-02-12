@@ -1,5 +1,5 @@
 //import { RequestApi } from '../../requestApi/requestApi';
-import types from './../constants';
+import types from './types';
 import {RequestApi} from "../../requestApi/requestApi";
 import {IDayData} from "../../components/definitions/IDayData";
 import {getForecastData} from "../../utils/parseFunctions";

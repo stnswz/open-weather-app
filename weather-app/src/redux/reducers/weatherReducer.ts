@@ -1,4 +1,4 @@
-import types from './../constants';
+import types from '../actions/types';
 import {IDayData} from "../../components/definitions/IDayData";
 
 interface IWeatherState {
