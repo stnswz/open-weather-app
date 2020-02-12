@@ -21,6 +21,28 @@ interface IHourData {
     icon: string,
 }
 
+const iconMap:any = {
+    "01d" : "d_4",
+    "02d" : "d_1",
+    "03d" : "d_2",
+    "04d" : "d_3",
+    "09d" : "d_65",
+    "10d" : "d_55",
+    "11d" : "d_9",
+    "13d" : "d_7",
+    "50d" : "mist",
+    "01n" : "n_4",
+    "02n" : "n_1",
+    "03n" : "n_2",
+    "04n" : "n_3",
+    "09n" : "n_65",
+    "10n" : "n_55",
+    "11n" : "n_9",
+    "13n" : "n_7",
+    "50n" : "mist",
+    "" : "",
+}
+
 export function getForecastData( data:any ):Array<IDayData> {
 
     let forecastData:Array<IDayData> = new Array<IDayData>();
@@ -97,7 +119,7 @@ function getDayPeriod( h1:IHourData, h2:IHourData | undefined): IDayPeriod {
     const icons:Array<string>  = getIcons(h1.icon, h2 ? h2.icon : "");
 
     let dayPeriod:IDayPeriod = {
-        dayTime: getDayTime( h1.hour ), // Morgens, Mittags, Abends...
+        dayTime: getDayTime( h1.hour ), // Morning, Noon, Evenings...
         temperature: temp.length === 1 ? temp[0]+" °C" : temp[0]+ " bis " + temp[1]+" °C",
         feelsLike: tempF.length === 1 ? tempF[0]+" °C" : tempF[0]+ " bis " + tempF[1]+" °C",
         description: getDescription( h1.description, h2 ? h2.description : "" ),
@@ -140,7 +162,9 @@ function getDayPeriod( h1:IHourData, h2:IHourData | undefined): IDayPeriod {
     }
 
     function getIcons( icon1:string, icon2:string ): Array<string> {
-        return icon1 === icon2 || !icon2 ? [AppConfig.ICON_URL + icon1 + ".png", ""] : [AppConfig.ICON_URL+icon1+".png", AppConfig.ICON_URL+icon2+".png"];
+        const i1:string = iconMap[icon1];
+        const i2:string = iconMap[icon2];
+        return i1 === i2 || !icon2 ? [AppConfig.ICON_URL + i1 + ".svg", ""] : [AppConfig.ICON_URL + i1 + ".svg", AppConfig.ICON_URL + i2 + ".svg"];
     }
 }
 
