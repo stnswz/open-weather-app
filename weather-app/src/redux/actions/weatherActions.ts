@@ -1,4 +1,3 @@
-//import { RequestApi } from '../../requestApi/requestApi';
 import types from './types';
 import {RequestApi} from "../../requestApi/requestApi";
 import {IDayData} from "../../components/definitions/IDayData";
@@ -13,9 +12,9 @@ export function loadWeatherData(city:string) {
         });
 
         try {
-            // Alles Ok:  {"cod":"200","message":0, "cnt":40}
-            // City nicht gefunden:  {"cod":"404","message":"city not found"}
-            // City nicht angegeben: {"cod":"400","message":"Nothing to geocode"}
+            // Ok:  {"cod":"200","message":0, "cnt":40}
+            // City not found:  {"cod":"404","message":"city not found"}
+            // City no city was given: {"cod":"400","message":"Nothing to geocode"}
 
             const data:any    = await RequestApi.getWeatherData( city );
             const code:string = data.cod as string;
