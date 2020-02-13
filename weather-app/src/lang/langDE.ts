@@ -9,6 +9,7 @@ export const langDE:Object = {
 
     WEATHER_FOR: "Das Wetter für",
     AT: "am",
+    TO: "bis",
     PRESSURE: "Luftdruck",
 
     CLOUDS_TTP: "Wolken",

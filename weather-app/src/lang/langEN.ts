@@ -9,6 +9,7 @@ export const langEN:Object = {
 
     WEATHER_FOR: "Weather for",
     AT: "at",
+    TO: "to",
     PRESSURE: "Pressure",
 
     CLOUDS_TTP: "Clouds",

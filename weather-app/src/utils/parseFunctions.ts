@@ -110,8 +110,9 @@ export function getForecastData( data:any ):Array<IDayData> {
 
 function getDayPeriod( h1:IHourData, h2:IHourData | undefined): IDayPeriod {
 
-    const temp:Array<number>   = sortAscending(h1.temperature, h2 ? h2.temperature : undefined);
-    const tempF:Array<number>   = sortAscending(h1.feelsLike, h2 ? h2.feelsLike : undefined);
+    const langObj: any = LangService.getLangObject();
+    const temp:Array<number> = sortAscending(h1.temperature, h2 ? h2.temperature : undefined);
+    const tempF:Array<number>  = sortAscending(h1.feelsLike, h2 ? h2.feelsLike : undefined);
     const clouds:Array<number> = sortAscending(h1.clouds, h2 ? h2.clouds : undefined);
     const wind:Array<number> = sortAscending(h1.wind, h2 ? h2.wind : undefined);
     const rain:Array<number> = sortAscending(h1.rain, h2 ? h2.rain : undefined);
@@ -120,8 +121,8 @@ function getDayPeriod( h1:IHourData, h2:IHourData | undefined): IDayPeriod {
 
     let dayPeriod:IDayPeriod = {
         dayTime: getDayTime( h1.hour ), // Morning, Noon, Evenings...
-        temperature: temp.length === 1 ? temp[0]+" °C" : temp[0]+ " bis " + temp[1]+" °C",
-        feelsLike: tempF.length === 1 ? tempF[0]+" °C" : tempF[0]+ " bis " + tempF[1]+" °C",
+        temperature: temp.length === 1 ? temp[0]+" °C" : temp[0]+ " " + langObj.TO + " " + temp[1]+" °C",
+        feelsLike: tempF.length === 1 ? tempF[0]+" °C" : tempF[0]+ " " + langObj.TO + " " + tempF[1]+" °C",
         description: getDescription( h1.description, h2 ? h2.description : "" ),
         clouds: clouds.length === 1 ? clouds[0]+" %" : clouds[0]+ " - " + clouds[1]+" %",
         wind: wind.length === 1 ? wind[0]+" Km/h" : wind[0]+ " - " + wind[1]+" Km/h",
@@ -136,7 +137,6 @@ function getDayPeriod( h1:IHourData, h2:IHourData | undefined): IDayPeriod {
     return dayPeriod;
 
     function getDayTime( h:number ): string {
-        const langObj: any = LangService.getLangObject();
         switch( h ) {
             case 0: 
             case 3: return langObj.NIGHT;
