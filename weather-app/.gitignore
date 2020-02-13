@@ -10,7 +10,7 @@
 
 # production
 /build
-/vorlage
+/src/vorlage
 
 # misc
 .DS_Store
