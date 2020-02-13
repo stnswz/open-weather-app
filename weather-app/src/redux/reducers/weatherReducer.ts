@@ -1,5 +1,5 @@
 import types from '../actions/types';
-import {IDayData} from "../../components/definitions/IDayData";
+import {IDayData} from "../../definitions/IDayData";
 
 interface IWeatherState {
     dataIsLoading: boolean,

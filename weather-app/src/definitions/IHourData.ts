@@ -1,0 +1,15 @@
+export interface IHourData {
+    date: string,
+    year:number,
+    hour: number,
+    weekDay: number,
+    temperature: number,
+    feelsLike: number,
+    description: string,
+    clouds: number,
+    wind: number,
+    rain: number,
+    humidity: number,
+    pressure: number,
+    icon: string,
+}

@@ -1,7 +1,7 @@
 import React, { Component, ReactElement } from "react";
 import { connect } from 'react-redux';
 import SelectionButton from "./SelectionButton";
-import {IDayData} from "./../components/definitions/IDayData";
+import {IDayData} from "../definitions/IDayData";
 
 interface IState {
     /* empty */

@@ -1,25 +1,10 @@
-import {IDayData} from "../components/definitions/IDayData";
-import {IDayPeriod} from "./../components/definitions/IDayPeriod";
+import {IDayData} from "../definitions/IDayData";
+import {IDayPeriod} from "../definitions/IDayPeriod";
+import {IHourData} from "../definitions/IHourData";
 import {AppConfig} from "./../config/AppConfig";
 import {LangService} from "./../lang/LangService";
 import {lang} from "./../constants/lang"
 import {dayMapDE, dayMapEN} from "./../lang/dayMap";
-
-interface IHourData {
-    date: string,
-    year:number,
-    hour: number,
-    weekDay: number,
-    temperature: number,
-    feelsLike: number,
-    description: string,
-    clouds: number,
-    wind: number,
-    rain: number,
-    humidity: number,
-    pressure: number,
-    icon: string,
-}
 
 const iconMap:any = {
     "01d" : "d_0",
