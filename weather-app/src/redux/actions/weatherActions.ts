@@ -5,7 +5,7 @@ import {getForecastData} from "../../utils/parseFunctions";
 import {LangService} from "./../../lang/LangService";
 import {ILang} from "./../../app/definitions/ILang";
 
-export function loadWeatherData(city:string) {
+export function loadWeatherData(city:string, isLangUpdate:boolean = false) {
 
     return async (dispatch:any, getState:any) => {
 
@@ -20,6 +20,7 @@ export function loadWeatherData(city:string) {
 
             const language:string = LangService.getLang();
             const langObj:ILang     = LangService.getLangObject();
+            const selectedIndex:number = isLangUpdate ? getState().weatherState.selectedIndex : 0;
             const data:any    = await RequestApi.getWeatherData( city, language.toLowerCase() );
             const code:string = data.cod as string;
             let responseMessage:string = "";
@@ -46,6 +47,7 @@ export function loadWeatherData(city:string) {
                     forecastCity: forecastCity,
                     searchedCity: city,
                     country: country,
+                    selectedIndex: selectedIndex,
                     responseMessage: responseMessage,
                 }
             });

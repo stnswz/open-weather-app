@@ -32,7 +32,7 @@ const initialState:IWeatherState = {
 const reducer = (state:IWeatherState = initialState, action:any) => {
     switch (action.type) {
         case types.WEATHER_DATA_LOADING:
-            return { ...initialState, dataIsLoading: true, preloadingStart: false}
+            return { ...initialState, selectedIndex: state.selectedIndex, dataIsLoading: true, preloadingStart: false}
         case types.PRELOADING_START:
             return { ...initialState, preloadingStart: true, dataIsLoading: false}
         case types.WEATHER_DATA_LOADED: 
@@ -40,7 +40,7 @@ const reducer = (state:IWeatherState = initialState, action:any) => {
                     dataIsLoading: false, 
                     loadingError: false, 
                     errorCode: "",
-                    selectedIndex: 0,
+                    selectedIndex: action.payload.selectedIndex,
                     forecastData: action.payload.forecastData,
                     forecastCity: action.payload.forecastCity,
                     searchedCity: action.payload.searchedCity,

@@ -14,7 +14,7 @@ export function setLanguage( lang:string ) {
         });
 
         if( weatherState.searchedCity ) {
-            await loadWeatherData( weatherState.searchedCity )(dispatch, getState);
+            await loadWeatherData( weatherState.searchedCity, true )(dispatch, getState);
         }
     };
 }
