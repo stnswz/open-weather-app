@@ -51,22 +51,22 @@ export function getForecastData( data:any ):Array<IDayData> {
 
         if( i === 0 && dayList.length % 2 === 1) {
             // Special step for the first data array (= todays data array), it's length 
-            // can be uneven since it doesn't must contain all 8 hours of a day.
+            // can be uneven since it doesn't must contain all 8 forecast hours of a day.
             const hourData: IHourData = dayList.length > 1 ? dayList.shift()! : dayList[0];
             let dayPeriod:IDayPeriod = getDayPeriod( hourData, undefined );
             dayPeriods.push( dayPeriod );
         }
 
         for( let b=0; b<dayList.length && dayList.length>1; b+=2 ) {
-            // The API has send us 8 hour for one day. We bind following 2 hours together to one day period:
+            // The API has send us 8 forecast hours for one day. We bind following 2 hours together to one day period:
             // 0h-3h Night / 6h-9h Morning / 12h-15h Noon / 18h-21h Evening
             let dayPeriod:IDayPeriod = getDayPeriod(dayList[b], dayList[b+1]);
             dayPeriods.push( dayPeriod );
         }
 
         // Determine the related week day.
-        const hData:IHourData = dayList[0];
-        const day:number = hData.weekDay;
+        const hourData:IHourData = dayList[0];
+        const day:number = hourData.weekDay;
 
         // Determine the min/max temperature for a day.
         const minMaxTemp:Array<number> = getMinMaxTemperature( dayList );
@@ -88,7 +88,15 @@ export function getForecastData( data:any ):Array<IDayData> {
         }
 
         forecastData.push( dayData );
+    }
 
+    // Special step for the first data array (= todays data array). 
+    const dd1:IDayData = forecastData[0];
+    const dd2:IDayData = forecastData[1];
+    if( dd1.dayPeriods.length < 4 ) {
+        // dd1 is todays data. It doesnt contain night data anymore, so we fill it up.
+        const dayPeriod:IDayPeriod = dd2.dayPeriods[0];
+        dd1.dayPeriods.push(dayPeriod);
     }
 
     return forecastData;
@@ -222,7 +230,7 @@ function getMinMaxTemperature(dayList:Array<IHourData>): Array<number> {
     for( let i=0; i<dayList.length; i++ ) {
         numbers.push( dayList[i].temperature );
     }
-    numbers.sort();
+    numbers.sort( (a, b) => a - b);
 
     return [ numbers[0], numbers[numbers.length-1] ];
 }
