@@ -4,6 +4,7 @@ import { loadWeatherData, startPreloading } from "./../redux/actions/weatherActi
 import { setLanguage } from "./../redux/actions/appActions";
 import {LangService} from "./../lang/LangService";
 import {lang} from "../app/constants/lang";
+import {ILang} from "./../app/definitions/ILang";
 
 interface IState {
     inputValue:string;
@@ -81,7 +82,7 @@ class InputBar extends Component<IProps, IState> {
         
         const classNameDE:string = this.props.language === lang.DE ? "langSelected" : "lang";
         const classNameEN:string = this.props.language === lang.EN ? "langSelected" : "lang";
-        const langObj:any = LangService.getLangObject();
+        const langObj:ILang = LangService.getLangObject();
 
         return (
             <div id="inputBar">

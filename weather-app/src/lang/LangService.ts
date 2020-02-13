@@ -1,3 +1,4 @@
+import {ILang} from "./../app/definitions/ILang";
 import {lang} from "../app/constants/lang";
 import {langDE} from "./langDE";
 import {langEN} from "./langEN";
@@ -14,7 +15,7 @@ export class LangService {
         return this.store.getState().appState.language;
     }
 
-    public static getLangObject(): any {
+    public static getLangObject():ILang {
         const selectedLang:string = this.store.getState().appState.language;
         return selectedLang === lang.DE ? langDE : langEN;
     }

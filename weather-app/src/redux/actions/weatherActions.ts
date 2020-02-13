@@ -3,6 +3,7 @@ import {RequestApi} from "../../requestApi/requestApi";
 import {IDayData} from "../../app/definitions/IDayData";
 import {getForecastData} from "../../utils/parseFunctions";
 import {LangService} from "./../../lang/LangService";
+import {ILang} from "./../../app/definitions/ILang";
 
 export function loadWeatherData(city:string) {
 
@@ -18,7 +19,7 @@ export function loadWeatherData(city:string) {
             // City no city was given: {"cod":"400","message":"Nothing to geocode"}
 
             const language:string = LangService.getLang();
-            const langObj:any     = LangService.getLangObject();
+            const langObj:ILang     = LangService.getLangObject();
             const data:any    = await RequestApi.getWeatherData( city, language.toLowerCase() );
             const code:string = data.cod as string;
             let responseMessage:string = "";

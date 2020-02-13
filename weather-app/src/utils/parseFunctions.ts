@@ -5,6 +5,7 @@ import {AppConfig} from "../app/config/AppConfig";
 import {LangService} from "./../lang/LangService";
 import {lang} from "../app/constants/lang"
 import {dayMapDE, dayMapEN} from "./../lang/dayMap";
+import {ILang} from "./../app/definitions/ILang";
 
 const iconMap:any = {
     "01d" : "d_0",
@@ -95,7 +96,7 @@ export function getForecastData( data:any ):Array<IDayData> {
 
 function getDayPeriod( h1:IHourData, h2:IHourData | undefined): IDayPeriod {
 
-    const langObj: any = LangService.getLangObject();
+    const langObj: ILang = LangService.getLangObject();
     const temp:Array<number> = sortAscending(h1.temperature, h2 ? h2.temperature : undefined);
     const tempF:Array<number>  = sortAscending(h1.feelsLike, h2 ? h2.feelsLike : undefined);
     const clouds:Array<number> = sortAscending(h1.clouds, h2 ? h2.clouds : undefined);

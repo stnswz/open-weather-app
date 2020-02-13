@@ -2,6 +2,7 @@ import React, { ReactElement } from "react";
 import IconBox from "./IconBox";
 import { IDayPeriod } from "../../app/definitions/IDayPeriod";
 import {LangService} from "./../../lang/LangService";
+import {ILang} from "./../../app/definitions/ILang";
 
 interface IProps {
     dayPeriod: IDayPeriod;
@@ -19,7 +20,7 @@ function WeatherColumn(props:IProps): ReactElement {
     }
 
     const dp: IDayPeriod = props.dayPeriod;
-    const langObj:any = LangService.getLangObject();
+    const langObj:ILang = LangService.getLangObject();
 
     return (
         <div className="column">

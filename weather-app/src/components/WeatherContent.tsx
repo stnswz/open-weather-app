@@ -4,6 +4,7 @@ import WeatherColumn from "./weatherContent/WeatherColumn";
 import {IDayData} from "../app/definitions/IDayData";
 import { IDayPeriod } from "../app/definitions/IDayPeriod";
 import {LangService} from "./../lang/LangService";
+import {ILang} from "./../app/definitions/ILang";
 import './../css/preloader.css';
 
 interface IState {
@@ -52,7 +53,7 @@ class WeatherContent extends Component<IProps, IState> {
 
         const forecastData: Array<IDayData> = this.props.forecastData || [];
         const numberForecastDays:number = forecastData.length;
-        const langObj:any = LangService.getLangObject();
+        const langObj:ILang = LangService.getLangObject();
 
         if( this.props.dataIsLoading || this.props.preloadingStart ) {
             // Show preloader.
