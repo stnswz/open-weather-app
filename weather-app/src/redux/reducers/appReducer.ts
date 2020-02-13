@@ -1,5 +1,5 @@
 import types from './../actions/types/';
-import {lang} from '../../constants/lang';
+import {lang} from '../../app/constants/lang';
 
 interface IAppState {
     language:string,

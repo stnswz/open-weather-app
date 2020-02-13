@@ -1,6 +1,6 @@
 import types from './types';
 import {RequestApi} from "../../requestApi/requestApi";
-import {IDayData} from "../../definitions/IDayData";
+import {IDayData} from "../../app/definitions/IDayData";
 import {getForecastData} from "../../utils/parseFunctions";
 import {LangService} from "./../../lang/LangService";
 

@@ -1,8 +1,8 @@
 import React, { Component, ReactElement } from "react";
 import { connect } from 'react-redux';
 import WeatherColumn from "./weatherContent/WeatherColumn";
-import {IDayData} from "../definitions/IDayData";
-import { IDayPeriod } from "../definitions/IDayPeriod";
+import {IDayData} from "../app/definitions/IDayData";
+import { IDayPeriod } from "../app/definitions/IDayPeriod";
 import {LangService} from "./../lang/LangService";
 import './../css/preloader.css';
 

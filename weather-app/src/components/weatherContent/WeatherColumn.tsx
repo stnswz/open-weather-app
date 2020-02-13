@@ -1,6 +1,6 @@
 import React, { ReactElement } from "react";
 import IconBox from "./IconBox";
-import { IDayPeriod } from "../../definitions/IDayPeriod";
+import { IDayPeriod } from "../../app/definitions/IDayPeriod";
 import {LangService} from "./../../lang/LangService";
 
 interface IProps {

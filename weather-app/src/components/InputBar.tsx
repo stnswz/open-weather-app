@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { loadWeatherData, startPreloading } from "./../redux/actions/weatherActions";
 import { setLanguage } from "./../redux/actions/appActions";
 import {LangService} from "./../lang/LangService";
-import {lang} from "./../constants/lang";
+import {lang} from "../app/constants/lang";
 
 interface IState {
     inputValue:string;

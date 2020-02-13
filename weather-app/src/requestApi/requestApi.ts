@@ -1,4 +1,4 @@
-import {AppConfig} from "./../config/AppConfig"
+import {AppConfig} from "../app/config/AppConfig"
 
 export class RequestApi {
 

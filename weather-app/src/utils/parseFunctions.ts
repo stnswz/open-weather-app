@@ -1,9 +1,9 @@
-import {IDayData} from "../definitions/IDayData";
-import {IDayPeriod} from "../definitions/IDayPeriod";
-import {IHourData} from "../definitions/IHourData";
-import {AppConfig} from "./../config/AppConfig";
+import {IDayData} from "../app/definitions/IDayData";
+import {IDayPeriod} from "../app/definitions/IDayPeriod";
+import {IHourData} from "../app/definitions/IHourData";
+import {AppConfig} from "../app/config/AppConfig";
 import {LangService} from "./../lang/LangService";
-import {lang} from "./../constants/lang"
+import {lang} from "../app/constants/lang"
 import {dayMapDE, dayMapEN} from "./../lang/dayMap";
 
 const iconMap:any = {

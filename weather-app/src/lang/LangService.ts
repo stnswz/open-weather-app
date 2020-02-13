@@ -1,4 +1,4 @@
-import {lang} from "./../constants/lang";
+import {lang} from "../app/constants/lang";
 import {langDE} from "./langDE";
 import {langEN} from "./langEN";
 
