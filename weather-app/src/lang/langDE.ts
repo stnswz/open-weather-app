@@ -2,7 +2,7 @@ import {ILang} from "./../app/definitions/ILang";
 
 export const langDE:ILang = {
     INPUT_SEARCHTEXT: "Suche nach Ort...",
-    INFOTEXT: "Beispielanwendung zur Wettervorhersage auf Basis einer frei verfügbaren API von openweathermap.com. Für die Anzeige von Wetterinformationen einfach im Suchfeld oben einen Ort bzw. Stadtnamen eingeben.",
+    INFOTEXT: "Beispielanwendung zur Wettervorhersage auf Basis einer frei verfügbaren API von openweathermap.org. Für die Anzeige von Wetterinformationen einfach im Suchfeld oben einen Ort bzw. Stadtnamen eingeben.",
     NOTHING_FOUND: "Zur Sucheingabe konnte nichts gefunden werden. Überprüfen Sie möglicherweise auf korrekte Schreibweise.",
     NIGHT: "Nachts",
     MORNING: "Morgens",
