@@ -135,12 +135,9 @@ div {
     color: #fff;
     cursor: pointer;
     overflow: hidden;
-    /* Permalink: https://colorzilla.com/gradient-editor/#4479c8+0,2d5ba9+49,4479c8+100 */
+    /* https://colorzilla.com/gradient-editor/#4479c8+0,2d5ba9+49,4479c8+100 */
     background: #4479c8; 
-    background: -moz-linear-gradient(top,  #4479c8 0%, #2d5ba9 49%, #4479c8 100%); 
-    background: -webkit-linear-gradient(top,  #4479c8 0%,#2d5ba9 49%,#4479c8 100%); 
     background: linear-gradient(to bottom,  #4479c8 0%,#2d5ba9 49%,#4479c8 100%); 
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4479c8', endColorstr='#4479c8',GradientType=0 ); 
 }
 .selectionButtonAnimated {
     animation-name: opacityAnimation;
@@ -153,6 +150,30 @@ div {
 .selectionButtonDisabled {
     cursor: unset;
     opacity: 0;
+}
+.selTop {
+    font-size: 0.95em;
+    letter-spacing: 0.08em;
+}
+.selBottom {
+    margin-top: 5px;
+    display:flex;
+    justify-content:flex-start;
+    align-items: flex-start;
+    flex-direction: row;
+}
+.selLeft {
+    width: 60px;
+}
+.selRight {
+    font-size: 0.9em;
+    text-align: center;
+    width: 70px;
+}
+.icon {
+    width: 50px;
+    margin-left: 0px;
+    margin-top: -10px;
 }
 @keyframes opacityAnimation {
     from {opacity: 0;}
@@ -213,19 +234,28 @@ div {
     flex-direction: row;
     flex-wrap:wrap;
 }
-@media only screen and (min-width: 600px ) {
-    .contentMain {
-        justify-content:flex-start;
-    }
-}
 .column {
     font-size: 1em;
-    width: 25%;
+    width: 90%;
     min-width: 165px;
     margin-top: 1em;
     border-right: 1px solid #ddd;
     padding: 0px 10px;
-    height: 500px;
+    /*height: 500px;*/
+}
+@media only screen and (min-width: 401px ) {
+    .column {
+        font-size: 1em;
+        width: 50%;
+    }
+}
+@media only screen and (min-width: 601px ) {
+    .contentMain {
+        justify-content:flex-start;
+    }
+    .column {
+        width: 25%;
+    }
 }
 .colTop {
     background: #fff;
@@ -247,11 +277,8 @@ div {
 .colTop .iconBox {
     height: 100px;
     margin: 0px -5px;
-    background: #76acea; /* Old browsers */
-    background: -moz-linear-gradient(top,  #76acea 1%, #ffffff 100%); /* FF3.6-15 */
-    background: -webkit-linear-gradient(top,  #76acea 1%,#ffffff 100%); /* Chrome10-25,Safari5.1-6 */
-    background: linear-gradient(to bottom,  #76acea 1%,#ffffff 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#76acea', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
+    background: #76acea;
+    background: linear-gradient(to bottom,  #76acea 1%,#ffffff 100%);
 }
 .colTop .iconBig {
     display: inline-block;
@@ -329,28 +356,4 @@ div {
 .colBottom .pressure {
     margin-top: 1em;
     margin-right: -10px;
-}
-.selTop {
-    font-size: 0.95em;
-    letter-spacing: 0.08em;
-}
-.selBottom {
-    margin-top: 5px;
-    display:flex;
-    justify-content:flex-start;
-    align-items: flex-start;
-    flex-direction: row;
-}
-.selLeft {
-    width: 60px;
-}
-.selRight {
-    font-size: 0.9em;
-    text-align: center;
-    width: 70px;
-}
-.icon {
-    width: 50px;
-    margin-left: 0px;
-    margin-top: -10px;
 }
