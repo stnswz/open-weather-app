@@ -36,15 +36,15 @@ div {
 
 #inputBar {
     position: relative;
-    padding: 1em;
+    padding: 1em 0.3em;
     display:flex;
-    justify-content:center;
+    justify-content:flex-end;
     align-items: flex-start;
     border-top: 0px solid #222;
     border-bottom: 0px solid #333;
     background-color: #3769b6;
 
-    background-image: url(./images/OW-API-Logo.png);
+    background-image: none;
     background-repeat: no-repeat;
     background-size: 136px 55px;
     background-position-x: 10px;
@@ -53,6 +53,17 @@ div {
     -webkit-box-shadow: 0px 5px 10px -3px rgba(34,34,34,0.6);
     -moz-box-shadow: 0px 5px 10px -3px rgba(34,34,34,0.6);
     box-shadow: 0px 5px 10px -3px rgba(34,34,34,0.6);
+}
+@media only screen and (min-width: 560px ) {
+    #inputBar {
+        background-image: url(./images/OW-API-Logo.png);
+    }
+}
+@media only screen and (min-width: 720px ) {
+    #inputBar {
+        justify-content:center;
+        padding: 1em 1em;
+    }
 }
 
 #textInput {
