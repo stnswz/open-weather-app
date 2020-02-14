@@ -5,6 +5,7 @@ import {IDayData} from "../app/definitions/IDayData";
 import { IDayPeriod } from "../app/definitions/IDayPeriod";
 import {LangService} from "./../lang/LangService";
 import {ILang} from "./../app/definitions/ILang";
+import {AppConfig} from "./../app/config/AppConfig";
 import './../css/preloader.css';
 
 interface IState {
@@ -54,6 +55,12 @@ class WeatherContent extends Component<IProps, IState> {
         const forecastData: Array<IDayData> = this.props.forecastData || [];
         const numberForecastDays:number = forecastData.length;
         const langObj:ILang = LangService.getLangObject();
+        const noApikeyText:ReactElement = <span className="missingApiKey">
+                                            Note: To run the application, you need an api key. Get a valid one 
+                                            at <a href="https://openweathermap.org/guide#how" target="blank">openweathermap.org</a> and 
+                                            add it to the config file in src/app/config/AppConfig.ts. Without api key, every requests will 
+                                            result in 401 Loading Errors.
+                                          </span>
 
         if( this.props.dataIsLoading || this.props.preloadingStart ) {
             // Show preloader.
@@ -91,7 +98,7 @@ class WeatherContent extends Component<IProps, IState> {
             // Nothing to show for now. Lets show an info text.
             return( 
                 <div id="infoContainer">
-                    {langObj.INFOTEXT}
+                    {AppConfig.API_KEY === "" ? noApikeyText : langObj.INFOTEXT}
                 </div> 
             );
         }
