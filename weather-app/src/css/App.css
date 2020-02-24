@@ -330,6 +330,7 @@ div {
     text-align: left;
     animation-name: opacityAnimation;
     animation-duration: 2s;
+    padding-bottom: 1em;
 }
 .colBottom .clouds {
     margin-top: 1em;
